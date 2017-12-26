@@ -7,9 +7,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="/res/bower_components/webcomponentsjs/webcomponents-lite.min.js" type="text/javascript" charset="utf-8"></script>
     <link href="/res/vul/elements.html" rel="import" />
+
+    <style type="text/css">
+    body {
+    	margin: 0px;
+    	padding: 0px;
+		display: grid;
+
+    	grid-template-columns: 172px 500px;
+		grid-template-areas:
+      		"classes title  title"
+			"classes chat calendar";
+		
+		
+	}
+	chat-element {
+		grid-area: chat;
+		background: #fff;
+		display: block;
+		height: 880px;
+		color: #3F51B5;
+	}
+	title-element {
+		grid-area: title;
+		background: #fff;
+		height: 47px;
+		color: #3F51B5;
+	}
+	classes-element{
+		grid-area: classes;
+		color: #3F51B5;
+	}
+	calendar-element{
+		grid-area: calendar;
+		background: #fff;
+		color: #3F51B5;
+	}
+
+    </style>
 </head>
 <body>
-  <h1>{{ .Name }}</h1>
-  <my-element></my-element>
+  <calendar-element></calendar-element>
+  <chat-element></chat-element>
+  <title-element></title-element>
+  <classes-element></classes-element>
 </body>
 </html>

@@ -40,6 +40,7 @@ type IndexData struct {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
+	glog.Infof("index.html")
 	if *local {
 		loadTemplates()
 	}
