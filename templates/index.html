@@ -13,30 +13,32 @@
     	margin: 0px;
     	padding: 0px;
 		display: grid;
-
+		grid-template-rows: 50px 1fr;
     	grid-template-columns: 172px 500px;
 		grid-template-areas:
       		"classes title  title"
 			"classes chat calendar";
-		
+		padding-left: 5px;
 		
 	}
 	chat-element {
 		grid-area: chat;
 		background: #fff;
 		display: block;
-		height: 880px;
 		color: #3F51B5;
+		display:grid;
+    	grid-template-rows: 1fr  99px;
 	}
 	title-element {
 		grid-area: title;
 		background: #fff;
-		height: 47px;
+
 		color: #3F51B5;
 	}
 	classes-element{
 		grid-area: classes;
 		color: #3F51B5;
+		padding-top: 5px;
 	}
 	calendar-element{
 		grid-area: calendar;
