@@ -19,6 +19,7 @@
       		"classes title  title"
 			"classes chat calendar";
 		padding-left: 5px;
+		height:100vh;
 		
 	}
 	chat-element {
@@ -52,6 +53,17 @@
   <calendar-element></calendar-element>
   <chat-element></chat-element>
   <title-element></title-element>
-  <classes-element></classes-element>
+  <classes-element id="classes"></classes-element>
+  <script type="text/javascript">
+  	document.getElementById("classes").periods = [
+  	{period:"1st",class:"Math",classroom:"Room 511"},
+  	{period:"2nd",class:"CSP",classroom:"Room 2703"},
+  	{period:"3rd",class:"English",classroom:"Room 2305"},
+  	{period:"4th",class:"Civics",classroom:"Room 1711"},
+  	{period:"5th",class:"Homeroom",classroom:"Room 503"}
+  	];
+
+
+  </script>
 </body>
 </html>

@@ -23,7 +23,7 @@
     height:162px;
     margin-bottom: 10px;
     box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-    
+
   }
   .period {
     grid-area: period;
@@ -51,37 +51,27 @@
   }
   </style>
   <template>
-    <div class="box">
-      <div class="period">1st</div>
-      <div class="class">Math</div>
-      <div class="classroom">Room 511</div>
-    </div>
-    <div class="box">
-      <div class="period">2nd</div>
-      <div class="class">CSP</div>
-      <div class="classroom">Room 2703</div>
-    </div>
-    <div class="box">
-      <div class="period">3rd</div>
-      <div class="class">English</div>
-      <div class="classroom">Room 2305</div>
-    </div>
-    <div class="box">
-      <div class="period">4th</div>
-      <div class="class">Civics</div>
-      <div class="classroom">Room 1711</div>
-    </div>
-    <div class="box">
-      <div class="period">5th</div>
-      <div class="class">Homeroom</div>
-      <div class="classroom">Room 503</div>
-    </div>
+    <template is="dom-repeat" items="{{periods}}">
+      <div class="box">
+        <div class="period">{{item.period}}</div>
+        <div class="class">{{item.class}}</div>
+        <div class="classroom">{{item.classroom}}</div>
+      </div>
+    </template>
   </template>
 </dom-module>
 
 <script>
   Polymer({
     is: "classes-element",
+
+    properties: {
+      periods: {
+        type: Array,
+        notify: true,
+        value: [],
+      }
+    },
 
     ready: function() {
     },
