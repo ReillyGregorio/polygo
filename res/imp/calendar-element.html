@@ -15,7 +15,6 @@
       grid-template-columns: 290px 900px;
       grid-template-areas:
           "date homework";
-      width:162px;
       height:80px;
       padding: 5px;
 
@@ -26,6 +25,7 @@
       color: #444;
       font-size: 60px;
       padding-right: 30px;
+
     }
     .date {
       border: solid black 2px;
@@ -33,52 +33,39 @@
       background: #fff;
       font-size: 20px;
       box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-      padding-left: 20px;
+      text-align: center;
     }
     .homework {
       border: solid black 2px;
       grid-area: homework;
       background: #fff;
       padding-top: 20px;
+      padding-left: 20px;
       font-size: 25px;
       box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
     }
   </style>
   <template>
-    <div class="box">
-      <div class="date"><span>S</span>Dec 24th 2017</div>
-      <div class="homework">Pages 5-17</div>
-    </div>
-    <div class="box">
-      <div class="date"><span>M</span>Dec 25th 2017</div>
-      <div class="homework">Chapter 8 Page 6 Questions 9-17</div>
-    </div>
-    <div class="box">
-      <div class="date"><span>T</span>Dec 26th 2017</div>
-      <div class="homework">Pages 1-5</div>
-    </div>
-    <div class="box">
-      <div class="date"><span>W</span>Dec 27th 2017</div>
-      <div class="homework">Pages 86-97</div>
-    </div>
-    <div class="box">
-      <div class="date"><span>T</span>Dec 28th 2017</div>
-      <div class="homework">Hw Packet</div>
-    </div>
-    <div class="box">
-      <div class="date"><span>F</span>Dec 29th 2017</div>
-      <div class="homework">Hw Packet 2</div>
-    </div>
-    <div class="box">
-      <div class="date"><span>S</span>Dec 30th 2017</div>
-      <div class="homework">Watch Dr Who</div>
-    </div>
+    <template is="dom-repeat" items="{{messages}}">
+      <div class="box">
+        <div class="date"><span>{{item.dow}}</span>{{item.date}}</div>
+        <div class="homework">{{item.hw}}</div>
+      </div>
+    </template>
   </template>
 </dom-module>
 
 <script>
   Polymer({
     is: "calendar-element",
+
+    properties: {
+      calendar: {
+        type: Array,
+        notify: true,
+        value: [],
+      }
+    },
 
     ready: function() {
     },

@@ -41,10 +41,13 @@
   }
   </style>
   <template>
-  <div class="chatroom">
-    <div class="msg"><span>Reilly:</span> <div class="text">hey sup</div></div>
-    <div class="msg"><span>Bob:</span> <div class="text">What is the HW</div></div>
-  </div>
+    
+      <div class="chatroom">
+        <template is="dom-repeat" items="{{messages}}">
+         <div class="msg"><span>{{item.name}}</span> <div class="text">{{item.msg}}</div></div>
+        </template>
+      </div>
+    
     <div class="chatbox"><paper-input label="Message..."></paper-input></div>
   </template>
 </dom-module>
@@ -52,6 +55,14 @@
 <script>
   Polymer({
     is: "chat-element",
+
+    properties: {
+      messages: {
+        type: Array,
+        notify: true,
+        value: [],
+      }
+    },
 
     ready: function() {
     },
