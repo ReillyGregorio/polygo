@@ -42,10 +42,11 @@
 		padding-top: 20px;
 	}
 	calendar-element{
+		overflow-y: auto;
 		grid-area: calendar;
 		background: #fff;
 		color: #3F51B5;
-		height: 100vh;
+		height: 94vh;
 	}
 
     </style>
@@ -69,7 +70,7 @@
   	{name:"Reilly:",msg:"oh right thx"},
   	{name:"Generic Freshman:",msg:"I like cheese"},
   	];
-  	document.getElementById("calendar").messages = [
+  	document.getElementById("calendar").events = [
   	{dow:"S",date:"Dec 24th 2017", hw:"Sleep"},
   	{dow:"M",date:"Dec 25th 2017", hw:"Chapter 8 page 327-390"},
   	{dow:"T",date:"Dec 26th 2017", hw:"Questions 1-17"},
