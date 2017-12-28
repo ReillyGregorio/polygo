@@ -7,8 +7,10 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/golang/glog"
+	"github.com/ReillyGregorio/polygo/go/ds"
 	"github.com/gorilla/mux"
+	"go.skia.org/infra/go/common"
+	"go.skia.org/infra/go/sklog"
 )
 
 // flags
@@ -41,7 +43,7 @@ type IndexData struct {
 }
 
 func indexHandler(w http.ResponseWriter, r *http.Request) {
-	glog.Infof("index.html")
+	sklog.Infof("index.html")
 	if *local {
 		loadTemplates()
 	}
@@ -49,7 +51,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		Name: "Skeleton App",
 	}
 	if err := templates.ExecuteTemplate(w, "index.html", data); err != nil {
-		glog.Errorf("Failed to expand template: %s", err)
+		sklog.Errorf("Failed to expand template: %s", err)
 	}
 }
 
@@ -93,7 +95,7 @@ func classesHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 	if err := json.NewEncoder(w).Encode(data); err != nil {
-		glog.Errorf("Failed to encode: %s", err)
+		sklog.Errorf("Failed to encode: %s", err)
 	}
 }
 
@@ -128,7 +130,7 @@ func chatHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 	if err := json.NewEncoder(w).Encode(data); err != nil {
-		glog.Errorf("Failed to encode: %s", err)
+		sklog.Errorf("Failed to encode: %s", err)
 	}
 }
 
@@ -234,13 +236,13 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 	if err := json.NewEncoder(w).Encode(data); err != nil {
-		glog.Errorf("Failed to encode: %s", err)
+		sklog.Errorf("Failed to encode: %s", err)
 	}
 }
 
 func main() {
-	flag.Parse()
-
+	common.Init()
+	ds.Init("ultra-syntax-689", "production")
 	// Resources are served directly.
 	router := mux.NewRouter()
 	router.PathPrefix("/res/").HandlerFunc(makeResourceHandler())
@@ -252,6 +254,6 @@ func main() {
 	router.HandleFunc("/calendar", calendarHandler)
 
 	http.Handle("/", router)
-	glog.Infof("Server is running at: http://localhost%s", *port)
-	glog.Fatal(http.ListenAndServe(*port, nil))
+	sklog.Infof("Server is running at: http://localhost%s", *port)
+	sklog.Fatal(http.ListenAndServe(*port, nil))
 }
