@@ -57,37 +57,32 @@
   <title-element></title-element>
   <classes-element id="classes"></classes-element>
   <script type="text/javascript">
-  	document.getElementById("classes").periods = [
-  	{period:"1st",class:"Math",classroom:"Room 511"},
-  	{period:"2nd",class:"CSP",classroom:"Room 2703"},
-  	{period:"3rd",class:"English",classroom:"Room 2305"},
-  	{period:"4th",class:"Civics",classroom:"Room 1711"},
-  	{period:"5th",class:"Homeroom",classroom:"Room 503"}
-  	];
-  	document.getElementById("chat").messages = [
-  	{name:"Reilly:",msg:"What was the homework yesterday"},
-  	{name:"Isiah:",msg:"pages 5-17 I think"},
-  	{name:"Reilly:",msg:"oh right thx"},
-  	{name:"Generic Freshman:",msg:"I like cheese"},
-  	];
-  	document.getElementById("calendar").events = [
-  	{dow:"S",date:"Dec 24th 2017", hw:"Sleep"},
-  	{dow:"M",date:"Dec 25th 2017", hw:"Chapter 8 page 327-390"},
-  	{dow:"T",date:"Dec 26th 2017", hw:"Questions 1-17"},
-  	{dow:"W",date:"Dec 27th 2017", hw:"HW Packet Page 1"},
-  	{dow:"T",date:"Dec 28th 2017", hw:"HW Packet Page 2"},
-  	{dow:"F",date:"Dec 29th 2017", hw:"HW Packet Page 3"},
-  	{dow:"S",date:"Dec 30th 2017", hw:"Sleep"},
-  	{dow:"S",date:"Dec 31st 2017", hw:"Sleep"},
-  	{dow:"M",date:"Jan 1st 2018", hw:"HW Packet Page 4"},
-  	{dow:"T",date:"Jan 2nd 2018", hw:"HW Packet Page 5-6"},
-  	{dow:"W",date:"Jan 3rd 2018", hw:"Pages 5-17"},
-  	{dow:"T",date:"Jan 4th 2018", hw:"Pages 18-27"},
-  	{dow:"F",date:"Jan 5th 2018", hw:"Pages 28-36"},
-  	{dow:"S",date:"Jan 6th 2018", hw:"Sleep"},
-  	{dow:"S",date:"Jan 7th 2018", hw:"Sleep"},
+    fetch("/classes").then(function(response){
+      if(response.ok){
+        return response.json();
+      }
+      throw new Error("Network error");
+    }).then(function(json){
+      document.getElementById("classes").periods = json;
+    })
 
-  	];
+    fetch("/chat").then(function(response){
+      if(response.ok){
+        return response.json();
+      }
+      throw new Error("Network error");
+    }).then(function(json){
+      document.getElementById("chat").messages = json;
+    })
+    
+    fetch("/calendar").then(function(response){
+      if(response.ok){
+        return response.json();
+      }
+      throw new Error("Network error");
+    }).then(function(json){
+      document.getElementById("calendar").events = json;
+    })
 
 
   </script>
