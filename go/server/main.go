@@ -1,11 +1,13 @@
 package main
 
 import (
+	"context"
 	"encoding/json"
 	"flag"
 	"html/template"
 	"net/http"
 	"path/filepath"
+	"time"
 
 	"github.com/ReillyGregorio/polygo/go/ds"
 	"github.com/gorilla/mux"
@@ -22,6 +24,10 @@ var (
 
 var (
 	templates *template.Template
+)
+
+const (
+	CLASSES ds.Kind = "classes"
 )
 
 func makeResourceHandler() func(http.ResponseWriter, *http.Request) {
@@ -56,14 +62,17 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 type period struct {
-	/*{period:"1st",class:"Math",classroom:"Room 511"},
-	{period:"2nd",class:"CSP",classroom:"Room 2703"},
-	{period:"3rd",class:"English",classroom:"Room 2305"},
-	{period:"4th",class:"Civics",classroom:"Room 1711"},
-	{period:"5th",class:"Homeroom",classroom:"Room 503"}*/
-	Period    string `json:"period"`
-	Class     string `json:"class"`
-	Classroom string `json:"classroom"`
+	/*
+		{period:"1st",class:"Math",classroom:"Room 511"},
+		{period:"2nd",class:"CSP",classroom:"Room 2703"},
+		{period:"3rd",class:"English",classroom:"Room 2305"},
+		{period:"4th",class:"Civics",classroom:"Room 1711"},
+		{period:"5th",class:"Homeroom",classroom:"Room 503"}
+	*/
+	Period    string `json:"period"     datastore:"period"`
+	Class     string `json:"class"      datastore:"class"`
+	Classroom string `json:"classroom"  datastore:"classroom"`
+	Semester  string `json:"semester"   datastore:"semester"`
 }
 
 func classesHandler(w http.ResponseWriter, r *http.Request) {
@@ -106,8 +115,9 @@ type messages struct {
 		  	{name:"Reilly:",msg:"oh right thx"},
 		  	{name:"Generic Freshman:",msg:"I like cheese"},
 	*/
-	Name string `json:"name"`
-	Msg  string `json:"msg"`
+	Name string    `json:"name"`
+	Msg  string    `json:"msg"`
+	TS   time.Time `json:"ts"`
 }
 
 func chatHandler(w http.ResponseWriter, r *http.Request) {
@@ -115,18 +125,22 @@ func chatHandler(w http.ResponseWriter, r *http.Request) {
 		messages{
 			Name: "Reilly:",
 			Msg:  "What was the homework yesterday",
+			TS:   time.Now().Add(-4 * time.Hour),
 		},
 		messages{
 			Name: "Isiah:",
 			Msg:  "pages 5-17 I think",
+			TS:   time.Now().Add(-3 * time.Hour),
 		},
 		messages{
 			Name: "Reilly:",
 			Msg:  "oh right thx",
+			TS:   time.Now().Add(-2 * time.Hour),
 		},
 		messages{
-			Name: "Generic Freshman::",
-			Msg:  "WI like cheese",
+			Name: "Generic Freshman:",
+			Msg:  "I like cheese",
+			TS:   time.Now().Add(-1 * time.Hour),
 		},
 	}
 	if err := json.NewEncoder(w).Encode(data); err != nil {
@@ -152,7 +166,6 @@ type events struct {
 		  	{dow:"S",date:"Jan 6th 2018", hw:"Sleep"},
 		  	{dow:"S",date:"Jan 7th 2018", hw:"Sleep"},
 	*/
-	Dow  string `json:"dow"`
 	Date string `json:"date"`
 	Hw   string `json:"hw"`
 }
@@ -160,78 +173,63 @@ type events struct {
 func calendarHandler(w http.ResponseWriter, r *http.Request) {
 	data := []events{
 		events{
-			Dow:  "S",
-			Date: "Dec 24th 2017",
+			Date: "2017-12-24",
 			Hw:   "Sleep",
 		},
 		events{
-			Dow:  "M",
-			Date: "Dec 25th 2017",
+			Date: "2017-12-25",
 			Hw:   "Chapter 8 page 327-390",
 		},
 		events{
-			Dow:  "T",
-			Date: "Dec 26th 2017",
+			Date: "2017-12-26",
 			Hw:   "Questions 1-17",
 		},
 		events{
-			Dow:  "W",
-			Date: "Dec 27th 2017",
+			Date: "2017-12-27",
 			Hw:   "HW Packet Page 1",
 		},
 		events{
-			Dow:  "T",
-			Date: "Dec 28th 2017",
+			Date: "2017-12-28",
 			Hw:   "HW Packet Page 2",
 		},
 		events{
-			Dow:  "F",
-			Date: "Dec 29th 2017",
+			Date: "2017-12-29",
 			Hw:   "HW Packet Page 3",
 		},
 		events{
-			Dow:  "S",
-			Date: "Dec 30th 2017",
+			Date: "2017-12-30",
 			Hw:   "Sleep",
 		},
 		events{
-			Dow:  "S",
-			Date: "Dec 31st 2017",
+			Date: "2017-12-31",
 			Hw:   "Sleep",
 		},
 		events{
-			Dow:  "M",
-			Date: "Jan 1st 2018",
+			Date: "2018-01-01",
 			Hw:   "HW Packet Page 4",
 		},
 		events{
-			Dow:  "T",
-			Date: "Jan 2nd 2018",
+			Date: "2018-01-02",
 			Hw:   "HW Packet Page 5-6",
 		},
 		events{
-			Dow:  "W",
-			Date: "Jan 3rd 2018",
+			Date: "2018-01-03",
 			Hw:   "Pages 5-17",
 		},
 		events{
-			Dow:  "T",
-			Date: "Jan 4th 2018",
+			Date: "2018-01-04",
 			Hw:   "Pages 18-27",
 		},
 		events{
-			Dow:  "F",
-			Date: "Jan 5th 2018",
+			Date: "2018-01-05",
 			Hw:   "Pages 28-36",
 		},
 		events{
-			Dow:  "S",
-			Date: "Jan 6th 2018",
+			Date: "2018-01-06",
 			Hw:   "Sleep",
 		},
 		events{
-			Dow:  "S",
-			Date: "Jan 7th 2018",
+			Date: "2018-01-07",
 			Hw:   "Sleep",
 		},
 	}
@@ -240,9 +238,25 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type User struct {
+	ID   string
+	Name string
+}
+
 func main() {
 	common.Init()
 	ds.Init("ultra-syntax-689", "production")
+	key := ds.NewKey(CLASSES)
+	var err error
+	p := period{
+		Period:    "1st",
+		Class:     "Math",
+		Classroom: "Room 511",
+	}
+	key, err = ds.DS.Put(context.Background(), key, &p)
+	if err != nil {
+		sklog.Errorf("failed to write %s", err)
+	}
 	// Resources are served directly.
 	router := mux.NewRouter()
 	router.PathPrefix("/res/").HandlerFunc(makeResourceHandler())

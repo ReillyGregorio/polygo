@@ -28,7 +28,7 @@
 		display: block;
 		color: #3F51B5;
 		display:grid;
-    	grid-template-rows: .90fr  99px;
+    	grid-template-rows: .999fr  99px;
 	}
 	title-element {
 		grid-area: title;
@@ -74,7 +74,7 @@
     }).then(function(json){
       document.getElementById("chat").messages = json;
     })
-    
+
     fetch("/calendar").then(function(response){
       if(response.ok){
         return response.json();

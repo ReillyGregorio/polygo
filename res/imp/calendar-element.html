@@ -9,31 +9,28 @@
 <dom-module id="calendar-element">
   <style>
     .box {
-
       display: grid;
       grid-gap: 10px;
-      grid-template-columns: 290px 900px;
+      grid-template-columns: 100px 1100px;
       grid-template-areas:
           "date homework";
-      height:80px;
+      height:100px;
       padding: 5px;
 
     }
-    span {
-      grid-area: day;
+    .bigone {
       background: #fff;
-      color: #444;
+      
       font-size: 60px;
-      padding-right: 30px;
-
+      text-align: center;
+      box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
+      border: solid black 2px;
     }
     .date {
-      border: solid black 2px;
       grid-area: date;
       background: #fff;
       font-size: 20px;
-      box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-      text-align: center;
+      text-align: right;
     }
     .homework {
       border: solid black 2px;
@@ -44,11 +41,14 @@
       font-size: 25px;
       box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
     }
+    .dow{
+      color: #444;
+    }
   </style>
   <template>
     <template is="dom-repeat" items="{{events}}">
       <div class="box">
-        <div class="date"><span>{{item.dow}}</span>{{item.date}}</div>
+        <div class="bigone"><div class="dow">{{toDay(item.date)}}</div><div class="date">{{item.date}}</div></div>
         <div class="homework">{{item.hw}}</div>
       </div>
     </template>
@@ -68,6 +68,13 @@
     },
 
     ready: function() {
+    },
+
+    toDay: function(date) {
+      var days = ["S","M","T","W","T","F","S"]
+      date = date.split("-");
+      var d = new Date(+date[0],+date[1]-1,+date[2]);
+      return days[d.getDay()];
     },
 
   });
