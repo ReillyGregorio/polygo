@@ -86,5 +86,44 @@
 
 
   </script>
+
+<script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
+<script>
+  // Initialize Firebase
+  var config = {
+    apiKey: "AIzaSyAaF4myVt3fnXKdg5auDidDR5nJmaXB5cY",
+    authDomain: "gradproject-7b11f.firebaseapp.com",
+    databaseURL: "https://gradproject-7b11f.firebaseio.com",
+    projectId: "gradproject-7b11f",
+    storageBucket: "",
+    messagingSenderId: "178157615439"
+  };
+  firebase.initializeApp(config);
+  var provider = new firebase.auth.GoogleAuthProvider();
+  provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
+  firebase.auth().signInWithPopup(provider).then(function(result) {
+    firebase.auth().currentUser.getIdToken(false).then(function(idToken){
+      fetch("/verify", {
+        method: "POST",
+        body: idToken
+      });
+    })
+    // This gives you a Google Access Token. You can use it to access the Google API.
+    var token = result.credential.accessToken;
+    // The signed-in user info.
+    var user = result.user;
+
+    
+  }).catch(function(error) {
+    // Handle Errors here.
+    var errorCode = error.code;
+    var errorMessage = error.message;
+    // The email of the user's account used.
+    var email = error.email;
+    // The firebase.auth.AuthCredential type that was used.
+    var credential = error.credential;
+    // ...
+  });
+</script>
 </body>
 </html>

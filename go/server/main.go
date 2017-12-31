@@ -5,14 +5,18 @@ import (
 	"encoding/json"
 	"flag"
 	"html/template"
+	"io/ioutil"
+	"log"
 	"net/http"
 	"path/filepath"
 	"time"
 
+	firebase "firebase.google.com/go"
 	"github.com/ReillyGregorio/polygo/go/ds"
 	"github.com/gorilla/mux"
 	"go.skia.org/infra/go/common"
 	"go.skia.org/infra/go/sklog"
+	"google.golang.org/api/option"
 )
 
 // flags
@@ -23,7 +27,8 @@ var (
 )
 
 var (
-	templates *template.Template
+	templates   *template.Template
+	firebaseApp *firebase.App
 )
 
 const (
@@ -243,11 +248,37 @@ type User struct {
 	Name string
 }
 
+func verifyHandler(w http.ResponseWriter, r *http.Request) {
+	b, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		sklog.Errorf("it errored %s", err)
+		return
+	}
+	client, err := firebaseApp.Auth(context.Background())
+	if err != nil {
+		sklog.Errorf("error getting Auth client: %v\n", err)
+		return
+	}
+
+	token, err := client.VerifyIDToken(string(b))
+	if err != nil {
+		sklog.Errorf("error verifying ID token: %v\n", err)
+		return
+	}
+
+	sklog.Infof("Verified ID token: %v\n", token)
+}
+
 func main() {
 	common.Init()
 	ds.Init("ultra-syntax-689", "production")
-	key := ds.NewKey(CLASSES)
+	opt := option.WithCredentialsFile("firebase.json")
 	var err error
+	firebaseApp, err = firebase.NewApp(context.Background(), nil, opt)
+	if err != nil {
+		log.Fatalf("error initializing app: %v\n", err)
+	}
+	key := ds.NewKey(CLASSES)
 	p := period{
 		Period:    "1st",
 		Class:     "Math",
@@ -266,6 +297,7 @@ func main() {
 	router.HandleFunc("/classes", classesHandler)
 	router.HandleFunc("/chat", chatHandler)
 	router.HandleFunc("/calendar", calendarHandler)
+	router.HandleFunc("/verify", verifyHandler)
 
 	http.Handle("/", router)
 	sklog.Infof("Server is running at: http://localhost%s", *port)
