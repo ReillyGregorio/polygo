@@ -46,12 +46,23 @@
     }
   </style>
   <template>
-    <template is="dom-repeat" items="{{events}}">
+    <template is="dom-repeat" items="[[events]]">
       <div class="box">
-        <div class="bigone"><div class="dow">{{toDay(item.date)}}</div><div class="date">{{item.date}}</div></div>
-        <div class="homework">{{item.hw}}</div>
+        <div class="bigone"><div class="dow">[[toDay(item.date)]]</div><div class="date">[[item.date]]</div></div>
+        
+        <div class="homework"><paper-button on-tap="edit" data-index$="[[index]]">Edit</paper-button>[[item.hw]]</div>
       </div>
     </template>
+
+    <paper-dialog id="dialog" on-iron-overlay-closed="closed">
+      <h2>Header</h2>
+      <textarea id="edit">{{editText}}</textarea>
+      <div class="buttons">
+        <paper-button dialog-dismiss>Cancel</paper-button>
+        <paper-button dialog-confirm autofocus>Accept</paper-button>
+      </div>
+    </paper-dialog>
+
   </template>
 </dom-module>
 
@@ -60,6 +71,11 @@
     is: "calendar-element",
 
     properties: {
+      editText: {
+        type: String,
+        notify: true,
+        value: "",
+      },
       events: {
         type: Array,
         notify: true,
@@ -68,6 +84,19 @@
     },
 
     ready: function() {
+      this.editIndex = 0;
+    },
+
+    edit: function(e){
+      this.editIndex = +e.target.dataset.index;
+      this.$.edit.value = this.events[this.editIndex].hw;
+      this.$.dialog.open();
+    },
+    closed: function(e){
+      if(e.detail.confirmed){
+        //this.events[this.editIndex].hw = this.editText;
+        this.set("events."+this.editIndex+".hw",this.$.edit.value);
+      }
     },
 
     toDay: function(date) {
