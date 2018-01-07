@@ -5,68 +5,69 @@
   Events:
   Methods:
 -->
-
 <dom-module id="chat-element">
-  <style>
-  span{
-    display: block;
-    font:bold;
-    color: black;
-    font-size: 24px;
-  }
-  .text{
-    margin-left: 25px;
-  }
-  .msg{
-    box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-    margin: 10px;
-    border-radius: 5px;
-    padding: 5px;
+    <style>
+    span {
+        display: block;
+        font: bold;
+        color: black;
+        font-size: 24px;
+    }
 
-  }
-  .chatbox {
-    box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-    margin: 10px;
-    border-radius: 5px;
-    padding: 5px;
-    border: solid black 2px;
+    .text {
+        margin-left: 25px;
+    }
 
-  }
-  .chatroom{
-    box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-    margin: 5px;
-    border-radius: 5px;
-    padding: 5px;
-    border: solid black 2px;
-    overflow-y: auto;
-  }
-  </style>
-  <template>
-    
-      <div class="chatroom">
-        <template is="dom-repeat" items="{{messages}}">
-         <div class="msg"><span>{{item.name}}</span> <div class="text">{{item.msg}}</div></div>
-        </template>
-      </div>
-    
-    <div class="chatbox"><paper-input label="Message..."></paper-input></div>
-  </template>
+    .msg {
+        box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.75);
+        margin: 10px;
+        border-radius: 5px;
+        padding: 5px;
+    }
+
+    .chatbox {
+        box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.75);
+        margin: 10px;
+        border-radius: 5px;
+        padding: 5px;
+        border: solid black 2px;
+    }
+
+    .chatroom {
+        box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.75);
+        margin: 5px;
+        border-radius: 5px;
+        padding: 5px;
+        border: solid black 2px;
+        overflow-y: auto;
+    }
+    </style>
+    <template>
+        <div class="chatroom">
+            <template is="dom-repeat" items="{{messages}}">
+                <div class="msg"><span>{{item.name}}</span>
+                    <div class="text">{{item.msg}}</div>
+                </div>
+            </template>
+        </div>
+        <div class="chatbox">
+            <paper-input label="Message..."></paper-input>
+        </div>
+    </template>
 </dom-module>
-
 <script>
-  Polymer({
+Polymer({
     is: "chat-element",
 
     properties: {
-      messages: {
-        type: Array,
-        notify: true,
-        value: [],
-      }
+        messages: {
+            type: Array,
+            notify: true,
+            value: [],
+        }
     },
 
-    ready: function() {
-    },
+    ready: function() {},
 
-  });
+});
 </script>

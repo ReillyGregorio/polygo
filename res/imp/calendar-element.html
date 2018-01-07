@@ -5,106 +5,118 @@
   Events:
   Methods:
 -->
-
 <dom-module id="calendar-element">
-  <style>
+    <style>
     .box {
-      display: grid;
-      grid-gap: 10px;
-      grid-template-columns: 100px 1100px;
-      grid-template-areas:
-          "date homework";
-      height:100px;
-      padding: 5px;
-
+        display: grid;
+        grid-gap: 10px;
+        grid-template-columns: 100px 1100px;
+        grid-template-areas: "date homework";
+        height: 100px;
+        padding: 5px;
     }
+
     .bigone {
-      background: #fff;
-      
-      font-size: 60px;
-      text-align: center;
-      box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
-      border: solid black 2px;
+        background: #fff;
+
+        font-size: 60px;
+        text-align: center;
+        box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.75);
+        border: solid black 2px;
     }
+
     .date {
-      grid-area: date;
-      background: #fff;
-      font-size: 20px;
-      text-align: right;
+        grid-area: date;
+        background: #fff;
+        font-size: 20px;
+        text-align: right;
     }
+
     .homework {
-      border: solid black 2px;
-      grid-area: homework;
-      background: #fff;
-      padding-top: 20px;
-      padding-left: 20px;
-      font-size: 25px;
-      box-shadow: 5px 5px 25px -5px rgba(0,0,0,0.75);
+        border: solid black 2px;
+        grid-area: homework;
+        background: #fff;
+        padding-top: 20px;
+        padding-left: 20px;
+        font-size: 25px;
+        box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.75);
     }
-    .dow{
-      color: #444;
+
+    .dow {
+        color: #444;
     }
-  </style>
-  <template>
-    <template is="dom-repeat" items="[[events]]">
-      <div class="box">
-        <div class="bigone"><div class="dow">[[toDay(item.date)]]</div><div class="date">[[item.date]]</div></div>
-        
-        <div class="homework"><paper-button on-tap="edit" data-index$="[[index]]">Edit</paper-button>[[item.hw]]</div>
-      </div>
+    </style>
+    <template>
+        <template is="dom-repeat" items="[[events]]">
+            <div class="box">
+                <div class="bigone">
+                    <div class="dow">[[toDay(item.date)]]</div>
+                    <div class="date">[[item.date]]</div>
+                </div>
+                <div class="homework">
+                    <paper-button on-tap="edit" data-index$="[[index]]">Edit</paper-button>[[item.hw]]</div>
+            </div>
+        </template>
+        <paper-dialog id="dialog" on-iron-overlay-closed="closed">
+            <h2>Header</h2>
+            <textarea id="edit">{{editText}}</textarea>
+            <div class="buttons">
+                <paper-button dialog-dismiss>Cancel</paper-button>
+                <paper-button dialog-confirm autofocus>Accept</paper-button>
+            </div>
+        </paper-dialog>
     </template>
-
-    <paper-dialog id="dialog" on-iron-overlay-closed="closed">
-      <h2>Header</h2>
-      <textarea id="edit">{{editText}}</textarea>
-      <div class="buttons">
-        <paper-button dialog-dismiss>Cancel</paper-button>
-        <paper-button dialog-confirm autofocus>Accept</paper-button>
-      </div>
-    </paper-dialog>
-
-  </template>
 </dom-module>
-
 <script>
-  Polymer({
+Polymer({
     is: "calendar-element",
 
     properties: {
-      editText: {
-        type: String,
-        notify: true,
-        value: "",
-      },
-      events: {
-        type: Array,
-        notify: true,
-        value: [],
-      }
+        editText: {
+            type: String,
+            notify: true,
+            value: "",
+        },
+        events: {
+            type: Array,
+            notify: true,
+            value: [],
+        }
     },
 
     ready: function() {
-      this.editIndex = 0;
+        this.editIndex = 0;
     },
 
-    edit: function(e){
-      this.editIndex = +e.target.dataset.index;
-      this.$.edit.value = this.events[this.editIndex].hw;
-      this.$.dialog.open();
+    edit: function(e) {
+        this.editIndex = +e.target.dataset.index;
+        this.$.edit.value = this.events[this.editIndex].hw;
+        this.$.dialog.open();
     },
-    closed: function(e){
-      if(e.detail.confirmed){
-        //this.events[this.editIndex].hw = this.editText;
-        this.set("events."+this.editIndex+".hw",this.$.edit.value);
-      }
+
+    closed: function(e) {
+        if (e.detail.confirmed) {
+            //this.events[this.editIndex].hw = this.editText;
+            this.set("events." + this.editIndex + ".hw", this.$.edit.value);
+            fetch("/calEdit", {
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    method: "POST",
+                    body: JSON.stringify(this.events[this.editIndex])
+                })
+                .then(function(res) { console.log(res) })
+                .catch(function(res) { console.log(res) })
+        }
     },
 
     toDay: function(date) {
-      var days = ["S","M","T","W","T","F","S"]
-      date = date.split("-");
-      var d = new Date(+date[0],+date[1]-1,+date[2]);
-      return days[d.getDay()];
+        var days = ["S", "M", "T", "W", "T", "F", "S"]
+        date = date.split("-");
+        var d = new Date(+date[0], +date[1] - 1, +date[2]);
+        return days[d.getDay()];
     },
 
-  });
+});
 </script>

@@ -32,7 +32,8 @@ var (
 )
 
 const (
-	CLASSES ds.Kind = "classes"
+	CLASSES  ds.Kind = "classes"
+	CALENDAR ds.Kind = "calendar"
 )
 
 func makeResourceHandler() func(http.ResponseWriter, *http.Request) {
@@ -269,6 +270,21 @@ func verifyHandler(w http.ResponseWriter, r *http.Request) {
 	sklog.Infof("Verified ID token: %v\n", token)
 }
 
+func calEditHandler(w http.ResponseWriter, r *http.Request) {
+	e := events{}
+	if err := json.NewDecoder(r.Body).Decode(&e); err != nil {
+		http.Error(w, "bad json", 400)
+		return
+	}
+	sklog.Infof("%#v", e)
+	key := ds.NewKey(CALENDAR)
+	key.Name = e.Date
+	_, err := ds.DS.Put(context.Background(), key, &e)
+	if err != nil {
+		sklog.Errorf("failed to write %s", err)
+	}
+}
+
 func main() {
 	common.Init()
 	ds.Init("ultra-syntax-689", "production")
@@ -278,16 +294,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("error initializing app: %v\n", err)
 	}
-	key := ds.NewKey(CLASSES)
-	p := period{
-		Period:    "1st",
-		Class:     "Math",
-		Classroom: "Room 511",
-	}
-	key, err = ds.DS.Put(context.Background(), key, &p)
-	if err != nil {
-		sklog.Errorf("failed to write %s", err)
-	}
+
 	// Resources are served directly.
 	router := mux.NewRouter()
 	router.PathPrefix("/res/").HandlerFunc(makeResourceHandler())
@@ -298,6 +305,7 @@ func main() {
 	router.HandleFunc("/chat", chatHandler)
 	router.HandleFunc("/calendar", calendarHandler)
 	router.HandleFunc("/verify", verifyHandler)
+	router.HandleFunc("/calEdit", calEditHandler)
 
 	http.Handle("/", router)
 	sklog.Infof("Server is running at: http://localhost%s", *port)
