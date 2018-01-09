@@ -8,19 +8,19 @@
 <dom-module id="title-element">
     <style>
      :root {
-        --my-custom-color: #3F51B5;
+        background: #424242;
+        --my-custom-color: white;
         --paper-tab-ink: var(--my-custom-color);
-        --paper-tabs-selection-bar-color: #3F51B5;
+        --paper-tabs-selection-bar-color: white;
         box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.75);
+        display: flex;
+        align-items: flex-end;
     }
 
     body {
-        margin: 0;
         display: flex;
         align-items: flex-end;
-        height: 60px;
-        background: #C5CAE9;
-        color: #3F51B5;
+        height: 50px;
     }
 
     paper-tabs {
@@ -29,7 +29,7 @@
         width: 100%;
         text-transform: uppercase;
         margin-bottom: 1px;
-        color: #3F51B5;
+        color: white;
     }
     </style>
     <template>
@@ -38,8 +38,6 @@
             <paper-tabs selected="0">
                 <paper-tab>1st Semester</paper-tab>
                 <paper-tab>2nd Semester</paper-tab>
-                <paper-tab>Sign up</paper-tab>
-                <paper-tab>Log out</paper-tab>
             </paper-tabs>
         </body>
     </template>

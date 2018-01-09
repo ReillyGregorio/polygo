@@ -9,41 +9,42 @@
     <style>
     .box {
         display: grid;
-        grid-gap: 10px;
-        grid-template-columns: 100px 1100px;
+        grid-template-columns: 100px 1060px;
         grid-template-areas: "date homework";
         height: 100px;
-        padding: 5px;
+        padding-top: 6px;
+    }
+
+    .box:nth-child(2n) {
+        background: #E0E0E0;
     }
 
     .bigone {
-        background: #fff;
-
         font-size: 60px;
         text-align: center;
-        box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.75);
-        border: solid black 2px;
     }
 
     .date {
         grid-area: date;
-        background: #fff;
         font-size: 20px;
         text-align: right;
     }
 
     .homework {
-        border: solid black 2px;
+      margin-left: 30px;
         grid-area: homework;
-        background: #fff;
-        padding-top: 20px;
-        padding-left: 20px;
-        font-size: 25px;
-        box-shadow: 5px 5px 25px -5px rgba(0, 0, 0, 0.75);
+        padding-top: 30px;
+        padding-left: 40px;
+        font-size: 30px;
     }
 
     .dow {
         color: #444;
+    }
+
+    .edit{
+      font-size: 12px;
+      float: right;
     }
     </style>
     <template>
@@ -54,7 +55,8 @@
                     <div class="date">[[item.date]]</div>
                 </div>
                 <div class="homework">
-                    <paper-button on-tap="edit" data-index$="[[index]]">Edit</paper-button>[[item.hw]]</div>
+                    <paper-button class="edit" on-tap="edit" data-index$="[[index]]">Edit</paper-button>
+                    [[item.hw]]</div>
             </div>
         </template>
         <paper-dialog id="dialog" on-iron-overlay-closed="closed">

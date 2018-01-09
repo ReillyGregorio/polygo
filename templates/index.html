@@ -13,41 +13,36 @@
         margin: 0px;
         padding: 0px;
         display: grid;
-        grid-template-rows: 50px 1fr;
+        grid-template-rows: 50px .90fr;
         grid-template-columns: 172px 500px;
-        grid-template-areas: "classes title  title" "classes chat calendar";
-        padding-left: 5px;
+        grid-template-areas: "title title  title" "classes chat calendar";
         height: 100vh;
     }
 
     chat-element {
         grid-area: chat;
-        background: #fff;
         display: block;
-        color: #3F51B5;
         display: grid;
-        grid-template-rows: .999fr 99px;
+        grid-template-rows: .96fr 90px;
+        border-left: solid black 1px;
+        border-right: solid black 1px;
     }
 
     title-element {
         grid-area: title;
-        background: #fff;
-
-        color: #3F51B5;
     }
 
     classes-element {
         grid-area: classes;
-        color: #3F51B5;
-        padding-top: 20px;
+        padding-top: 35px;
+        padding-left: 5px;
     }
 
     calendar-element {
+        padding-top: 20px;
         overflow-y: auto;
         grid-area: calendar;
-        background: #fff;
-        color: #3F51B5;
-        height: 94vh;
+        height: 93vh;
     }
     </style>
 </head>
