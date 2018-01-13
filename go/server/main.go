@@ -16,6 +16,7 @@ import (
 	"github.com/gorilla/mux"
 	"go.skia.org/infra/go/common"
 	"go.skia.org/infra/go/sklog"
+	"google.golang.org/api/iterator"
 	"google.golang.org/api/option"
 )
 
@@ -177,7 +178,7 @@ type events struct {
 }
 
 func calendarHandler(w http.ResponseWriter, r *http.Request) {
-	data := []events{
+	/*data := []events{
 		events{
 			Date: "2017-12-24",
 			Hw:   "Sleep",
@@ -238,6 +239,23 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 			Date: "2018-01-07",
 			Hw:   "Sleep",
 		},
+	}
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		sklog.Errorf("Failed to encode: %s", err)
+	}*/
+	query := ds.NewQuery(CALENDAR).Order("Date")
+	data := []events{}
+	it := ds.DS.Run(r.Context(), query)
+	for {
+		var e events
+		_, err := it.Next(&e)
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			log.Fatalf("Error fetching next task: %v", err)
+		}
+		data = append(data, e)
 	}
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		sklog.Errorf("Failed to encode: %s", err)
