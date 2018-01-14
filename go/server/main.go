@@ -243,6 +243,19 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		sklog.Errorf("Failed to encode: %s", err)
 	}*/
+
+	lookup := map[string]events{}
+	start := time.Now()
+	start = start.Add(-time.Hour * 24 * 5)
+	keys := []string{}
+	for i := 0; i < 30; i++ {
+		d := start.Format("2006-01-02")
+		lookup[d] = events{Date: d}
+		keys = append(keys, d)
+
+		start = start.Add(time.Hour * 24)
+
+	}
 	query := ds.NewQuery(CALENDAR).Order("Date")
 	data := []events{}
 	it := ds.DS.Run(r.Context(), query)
@@ -255,7 +268,10 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 		if err != nil {
 			log.Fatalf("Error fetching next task: %v", err)
 		}
-		data = append(data, e)
+		lookup[e.Date] = e
+	}
+	for _, key := range keys {
+		data = append(data, lookup[key])
 	}
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		sklog.Errorf("Failed to encode: %s", err)
