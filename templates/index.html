@@ -96,6 +96,7 @@
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     firebase.auth().signInWithPopup(provider).then(function(result) {
         firebase.auth().currentUser.getIdToken(false).then(function(idToken) {
+          document._token = idToken;
             fetch("/verify", {
                 method: "POST",
                 body: idToken
@@ -105,6 +106,7 @@
         var token = result.credential.accessToken;
         // The signed-in user info.
         var user = result.user;
+        document._user = user;
 
 
     }).catch(function(error) {

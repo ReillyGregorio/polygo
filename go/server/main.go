@@ -178,71 +178,6 @@ type events struct {
 }
 
 func calendarHandler(w http.ResponseWriter, r *http.Request) {
-	/*data := []events{
-		events{
-			Date: "2017-12-24",
-			Hw:   "Sleep",
-		},
-		events{
-			Date: "2017-12-25",
-			Hw:   "Chapter 8 page 327-390",
-		},
-		events{
-			Date: "2017-12-26",
-			Hw:   "Questions 1-17",
-		},
-		events{
-			Date: "2017-12-27",
-			Hw:   "HW Packet Page 1",
-		},
-		events{
-			Date: "2017-12-28",
-			Hw:   "HW Packet Page 2",
-		},
-		events{
-			Date: "2017-12-29",
-			Hw:   "HW Packet Page 3",
-		},
-		events{
-			Date: "2017-12-30",
-			Hw:   "Sleep",
-		},
-		events{
-			Date: "2017-12-31",
-			Hw:   "Sleep",
-		},
-		events{
-			Date: "2018-01-01",
-			Hw:   "HW Packet Page 4",
-		},
-		events{
-			Date: "2018-01-02",
-			Hw:   "HW Packet Page 5-6",
-		},
-		events{
-			Date: "2018-01-03",
-			Hw:   "Pages 5-17",
-		},
-		events{
-			Date: "2018-01-04",
-			Hw:   "Pages 18-27",
-		},
-		events{
-			Date: "2018-01-05",
-			Hw:   "Pages 28-36",
-		},
-		events{
-			Date: "2018-01-06",
-			Hw:   "Sleep",
-		},
-		events{
-			Date: "2018-01-07",
-			Hw:   "Sleep",
-		},
-	}
-	if err := json.NewEncoder(w).Encode(data); err != nil {
-		sklog.Errorf("Failed to encode: %s", err)
-	}*/
 
 	lookup := map[string]events{}
 	start := time.Now()
@@ -283,6 +218,21 @@ type User struct {
 	Name string
 }
 
+func isValidUser(r string) bool {
+	client, err := firebaseApp.Auth(context.Background())
+	if err != nil {
+		sklog.Errorf("error getting Auth client: %v\n", err)
+		return false
+	}
+
+	_, err = client.VerifyIDToken(r)
+	if err != nil {
+		sklog.Errorf("error verifying ID token: %v\n", err)
+		return false
+	}
+	return true
+}
+
 func verifyHandler(w http.ResponseWriter, r *http.Request) {
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -305,6 +255,11 @@ func verifyHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 func calEditHandler(w http.ResponseWriter, r *http.Request) {
+	token := r.FormValue("token")
+	if !isValidUser(token) {
+		http.Error(w, "unauthorized", 402)
+		return
+	}
 	e := events{}
 	if err := json.NewDecoder(r.Body).Decode(&e); err != nil {
 		http.Error(w, "bad json", 400)

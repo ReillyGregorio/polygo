@@ -100,7 +100,7 @@ Polymer({
         if (e.detail.confirmed) {
             //this.events[this.editIndex].hw = this.editText;
             this.set("events." + this.editIndex + ".hw", this.$.edit.value);
-            fetch("/calEdit", {
+            fetch("/calEdit?token="+document._token, {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
