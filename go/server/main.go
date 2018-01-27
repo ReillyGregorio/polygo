@@ -84,27 +84,27 @@ type period struct {
 
 func classesHandler(w http.ResponseWriter, r *http.Request) {
 	data := []period{
-		period{
+		{
 			Period:    "1st",
 			Class:     "Math",
 			Classroom: "Room 511",
 		},
-		period{
+		{
 			Period:    "2nd",
 			Class:     "CSP",
 			Classroom: "Room 2703",
 		},
-		period{
+		{
 			Period:    "3rd",
 			Class:     "English",
 			Classroom: "Room 2305",
 		},
-		period{
+		{
 			Period:    "4th",
 			Class:     "Civics",
 			Classroom: "Room 1711",
 		},
-		period{
+		{
 			Period:    "5th",
 			Class:     "Homeroom",
 			Classroom: "Room 503",
@@ -129,22 +129,22 @@ type messages struct {
 
 func chatHandler(w http.ResponseWriter, r *http.Request) {
 	data := []messages{
-		messages{
+		{
 			Name: "Reilly:",
 			Msg:  "What was the homework yesterday",
 			TS:   time.Now().Add(-4 * time.Hour),
 		},
-		messages{
+		{
 			Name: "Isiah:",
 			Msg:  "pages 5-17 I think",
 			TS:   time.Now().Add(-3 * time.Hour),
 		},
-		messages{
+		{
 			Name: "Reilly:",
 			Msg:  "oh right thx",
 			TS:   time.Now().Add(-2 * time.Hour),
 		},
-		messages{
+		{
 			Name: "Generic Freshman:",
 			Msg:  "I like cheese",
 			TS:   time.Now().Add(-1 * time.Hour),

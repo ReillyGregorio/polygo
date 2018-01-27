@@ -14,18 +14,10 @@
         padding: 0px;
         display: grid;
         grid-template-rows: 50px .90fr;
-        grid-template-columns: 172px 500px;
-        grid-template-areas: "title title  title" "classes chat calendar";
+        grid-template-columns: 172px 1fr 1fr;
+        grid-template-areas: "title title  title" 
+                             "classes calendar calendar";
         height: 100vh;
-    }
-
-    chat-element {
-        grid-area: chat;
-        display: block;
-        display: grid;
-        grid-template-rows: .96fr 90px;
-        border-left: solid black 1px;
-        border-right: solid black 1px;
     }
 
     title-element {
@@ -39,6 +31,8 @@
     }
 
     calendar-element {
+        border-left:solid black 1px;
+        margin-left: 20px;
         padding-top: 20px;
         overflow-y: auto;
         grid-area: calendar;
@@ -49,7 +43,6 @@
 
 <body>
     <calendar-element id="calendar"></calendar-element>
-    <chat-element id="chat"></chat-element>
     <title-element></title-element>
     <classes-element id="classes"></classes-element>
     <script type="text/javascript">
