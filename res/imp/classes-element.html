@@ -46,10 +46,13 @@
         text-align: right;
         margin-right: 0;
     }
+    .selected{
+        background: #cecece;
+    }
     </style>
     <template>
         <template is="dom-repeat" items="{{periods}}">
-            <div class="box">
+            <div class="box" on-click="_click" data-id$="{{item.period}}">
                 <div class="period">{{item.period}}</div>
                 <div class="class">{{item.class}}</div>
                 <div class="classroom">{{item.classroom}}</div>
@@ -71,6 +74,17 @@ Polymer({
     },
 
     ready: function() {},
+    _click: function(e){
+        var ele = e.srcElement;
+        while (!ele.classList.contains("box")){
+            ele = ele.parentElement;
+        }
+        ele.parentElement.querySelectorAll(".box").forEach(function(e){
+            e.classList.remove("selected");
+        });
+        ele.classList.add("selected");
+        console.log(+ele.dataset.id[0]);
+    },
 
 });
 </script>

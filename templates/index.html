@@ -55,15 +55,6 @@
         document.getElementById("classes").periods = json;
     })
 
-    fetch("/chat").then(function(response) {
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error("Network error");
-    }).then(function(json) {
-        document.getElementById("chat").messages = json;
-    })
-
     fetch("/calendar").then(function(response) {
         if (response.ok) {
             return response.json();
