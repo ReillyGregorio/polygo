@@ -1,0 +1,6 @@
+indexes:
+- kind: calendar
+  properties:
+  - name: class
+  - name: period
+  - name: Date
