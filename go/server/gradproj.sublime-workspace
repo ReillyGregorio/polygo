@@ -4,6 +4,14 @@
 		"selected_items":
 		[
 			[
+				"jso",
+				"jsonString"
+			],
+			[
+				"sel",
+				"selectedClass"
+			],
+			[
 				"bo",
 				"border"
 			],
@@ -16,28 +24,19 @@
 	"buffers":
 	[
 		{
-			"file": "/home/reilly/.bashrc",
-			"settings":
-			{
-				"buffer_size": 4180,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/templates/index.html",
-			"settings":
-			{
-				"buffer_size": 3648,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
 			"file": "main.go",
 			"settings":
 			{
-				"buffer_size": 7515,
+				"buffer_size": 6825,
+				"encoding": "UTF-8",
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/reilly/.bashrc",
+			"settings":
+			{
+				"buffer_size": 4203,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -51,10 +50,10 @@
 			}
 		},
 		{
-			"file": "/home/reilly/.config/sublime-text-3/Packages/User/golang.sublime-settings",
+			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/templates/index.html",
 			"settings":
 			{
-				"buffer_size": 841,
+				"buffer_size": 3712,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -63,7 +62,7 @@
 			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/calendar-element.html",
 			"settings":
 			{
-				"buffer_size": 3194,
+				"buffer_size": 3345,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -72,16 +71,7 @@
 			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/classes-element.html",
 			"settings":
 			{
-				"buffer_size": 1707,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/.git/config",
-			"settings":
-			{
-				"buffer_size": 321,
+				"buffer_size": 2525,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -116,7 +106,7 @@
 		[
 			[
 				"Package Control: ",
-				"Package Control: List Packages"
+				"Package Control: Install Package"
 			],
 			[
 				"Package Control: install",
@@ -148,6 +138,11 @@
 	},
 	"file_history":
 	[
+		"/home/reilly/.config/sublime-text-3/Packages/GoSublime/CHANGELOG.md",
+		"/home/reilly/.config/sublime-text-3/Packages/User/golang.sublime-settings",
+		"/home/reilly/.config/sublime-text-3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
+		"/home/reilly/.bashrc",
+		"/home/reilly/golib/src/github.com/ReillyGregorio/polygo/.git/config",
 		"/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/chat-element.html",
 		"/home/reilly/Downloads/sublime_text_3/sublime_plugin.py",
 		"/home/reilly/Downloads/sublime_text_3/sublime_text.desktop",
@@ -157,7 +152,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 48.0
 	},
 	"find_in_files":
 	{
@@ -171,6 +166,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			")\n"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -193,19 +189,61 @@
 			[
 				{
 					"buffer": 0,
+					"file": "main.go",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 6825,
+						"regions":
+						{
+							"mark":
+							{
+								"flags": 1040,
+								"icon": "Packages/Theme - Default/common/dot.png",
+								"regions":
+								[
+									[
+										4243,
+										4243
+									]
+								],
+								"scope": "mark"
+							}
+						},
+						"selection":
+						[
+							[
+								4309,
+								4309
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/Go/Go.sublime-syntax",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 4354.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
 					"file": "/home/reilly/.bashrc",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4180,
+						"buffer_size": 4203,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3772,
-								3772
+								4145,
+								4145
 							]
 						],
 						"settings":
@@ -215,73 +253,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2328.0,
+						"translation.y": 3264.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/templates/index.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3648,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								975,
-								975
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 256.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
 					"buffer": 2,
-					"file": "main.go",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 7515,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								363,
-								363
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Go/Go.sublime-syntax",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/elements.html",
 					"semi_transient": false,
 					"settings":
@@ -311,50 +290,20 @@
 					"type": "text"
 				},
 				{
-					"buffer": 4,
-					"file": "/home/reilly/.config/sublime-text-3/Packages/User/golang.sublime-settings",
+					"buffer": 3,
+					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/templates/index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 841,
+						"buffer_size": 3712,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								248,
-								248
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/JavaScript/JSON.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/calendar-element.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3194,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								255,
-								255
+								3305,
+								3305
 							]
 						],
 						"settings":
@@ -364,7 +313,67 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2080.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 4,
+					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/calendar-element.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 3345,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2644,
+								2644
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2208.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 5,
+					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/classes-element.html",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2525,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								2229,
+								2229
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/HTML/HTML.sublime-syntax",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 1536.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
@@ -372,64 +381,6 @@
 				},
 				{
 					"buffer": 6,
-					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/classes-element.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1707,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1460,
-								1460
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 384.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 7,
-					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/.git/config",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 321,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								181,
-								181
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 8,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/my-element.html",
 					"semi_transient": false,
 					"settings":
@@ -455,11 +406,11 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 9,
+					"stack_index": 7,
 					"type": "text"
 				},
 				{
-					"buffer": 9,
+					"buffer": 7,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/title-element.html",
 					"semi_transient": false,
 					"settings":
@@ -493,7 +444,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 48.0
 	},
 	"input":
 	{
@@ -522,15 +473,23 @@
 		]
 	},
 	"menu_visible": true,
+	"output.GoSublime-output":
+	{
+		"height": 1344.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"output.gotools_syntax_errors":
+	{
+		"height": 216.0
 	},
 	"pinned_build_system": "",
 	"project": "gradproj.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 88.0
 	},
 	"save_all_on_build": true,
 	"select_file":

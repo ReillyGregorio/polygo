@@ -15,8 +15,7 @@
         display: grid;
         grid-template-rows: 50px .90fr;
         grid-template-columns: 172px 1fr 1fr;
-        grid-template-areas: "title title  title" 
-                             "classes calendar calendar";
+        grid-template-areas: "title title  title" "classes calendar calendar";
         height: 100vh;
     }
 
@@ -31,7 +30,7 @@
     }
 
     calendar-element {
-        border-left:solid black 1px;
+        border-left: solid black 1px;
         margin-left: 20px;
         padding-top: 20px;
         overflow-y: auto;
@@ -54,15 +53,6 @@
     }).then(function(json) {
         document.getElementById("classes").periods = json;
     })
-
-    fetch("/calendar").then(function(response) {
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error("Network error");
-    }).then(function(json) {
-        document.getElementById("calendar").events = json;
-    })
     </script>
     <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
     <script>
@@ -80,7 +70,7 @@
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
     firebase.auth().signInWithPopup(provider).then(function(result) {
         firebase.auth().currentUser.getIdToken(false).then(function(idToken) {
-          document._token = idToken;
+            document._token = idToken;
             fetch("/verify", {
                 method: "POST",
                 body: idToken
@@ -107,12 +97,18 @@
     window._selectedPeriod = 1;
     window._selectedClass = "";
 
-    document.body.addEventListener("class-change", function(e){
+    document.body.addEventListener("class-change", function(e) {
         window._selectedPeriod = e.detail.period;
         window._selectedClass = e.detail.class;
+        fetch(`/calendar?period=${window._selectedPeriod}&class=${window._selectedClass}`).then(function(response) {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Network error");
+        }).then(function(json) {
+            document.getElementById("calendar").events = json;
+        })
     });
-
-    
     </script>
 </body>
 

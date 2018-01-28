@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"strconv"
 	"time"
 
 	firebase "firebase.google.com/go"
@@ -140,7 +141,13 @@ type events struct {
 }
 
 func calendarHandler(w http.ResponseWriter, r *http.Request) {
-
+	class := r.FormValue("class")
+	period, err := strconv.Atoi(r.FormValue("period"))
+	if err != nil {
+		sklog.Errorf("error in period conversion : %s", err)
+		http.Error(w, "bad format", 400)
+		return
+	}
 	lookup := map[string]events{}
 	start := time.Now()
 	start = start.Add(-time.Hour * 24 * 5)
@@ -153,7 +160,7 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 		start = start.Add(time.Hour * 24)
 
 	}
-	query := ds.NewQuery(CALENDAR).Order("Date")
+	query := ds.NewQuery(CALENDAR).Filter("period=", period).Filter("class=", class).Order("Date")
 	data := []events{}
 	it := ds.DS.Run(r.Context(), query)
 	for {
