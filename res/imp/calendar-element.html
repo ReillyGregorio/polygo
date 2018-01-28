@@ -100,13 +100,16 @@ Polymer({
         if (e.detail.confirmed) {
             //this.events[this.editIndex].hw = this.editText;
             this.set("events." + this.editIndex + ".hw", this.$.edit.value);
+            var jsonString = this.events[this.editIndex];
+            jsonString.period = window._selectedPeriod;
+            jsonString.class = window._selectedClass;
             fetch("/calEdit?token="+document._token, {
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
                     method: "POST",
-                    body: JSON.stringify(this.events[this.editIndex])
+                    body: JSON.stringify(jsonString)
                 })
                 .then(function(res) { console.log(res) })
                 .catch(function(res) { console.log(res) })

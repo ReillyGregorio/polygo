@@ -52,7 +52,7 @@
     </style>
     <template>
         <template is="dom-repeat" items="{{periods}}">
-            <div class="box" on-click="_click" data-id$="{{item.period}}">
+            <div class$="{{_selected(index)}}" on-click="_click" data-id$="{{item.period}}" data-class$="{{item.class}}">
                 <div class="period">{{item.period}}</div>
                 <div class="class">{{item.class}}</div>
                 <div class="classroom">{{item.classroom}}</div>
@@ -73,7 +73,11 @@ Polymer({
         }
     },
 
-    ready: function() {},
+    ready: function() {
+
+
+    },
+
     _click: function(e){
         var ele = e.srcElement;
         while (!ele.classList.contains("box")){
@@ -84,6 +88,16 @@ Polymer({
         });
         ele.classList.add("selected");
         console.log(+ele.dataset.id[0]);
+
+        var event = new CustomEvent("class-change", {detail: {period: +ele.dataset.id[0], class:ele.dataset.class} ,bubbles: true});
+
+        this.dispatchEvent(event);
+    },
+    _selected: function(index){
+        if (index == 0){
+            return "box selected";
+        }
+        return "box";
     },
 
 });

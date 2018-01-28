@@ -103,6 +103,16 @@
         var credential = error.credential;
         // ...
     });
+
+    window._selectedPeriod = 1;
+    window._selectedClass = "";
+
+    document.body.addEventListener("class-change", function(e){
+        window._selectedPeriod = e.detail.period;
+        window._selectedClass = e.detail.class;
+    });
+
+    
     </script>
 </body>
 

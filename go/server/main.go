@@ -115,46 +115,6 @@ func classesHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type messages struct {
-	/*
-			{name:"Reilly:",msg:"What was the homework yesterday"},
-		  	{name:"Isiah:",msg:"pages 5-17 I think"},
-		  	{name:"Reilly:",msg:"oh right thx"},
-		  	{name:"Generic Freshman:",msg:"I like cheese"},
-	*/
-	Name string    `json:"name"`
-	Msg  string    `json:"msg"`
-	TS   time.Time `json:"ts"`
-}
-
-func chatHandler(w http.ResponseWriter, r *http.Request) {
-	data := []messages{
-		{
-			Name: "Reilly:",
-			Msg:  "What was the homework yesterday",
-			TS:   time.Now().Add(-4 * time.Hour),
-		},
-		{
-			Name: "Isiah:",
-			Msg:  "pages 5-17 I think",
-			TS:   time.Now().Add(-3 * time.Hour),
-		},
-		{
-			Name: "Reilly:",
-			Msg:  "oh right thx",
-			TS:   time.Now().Add(-2 * time.Hour),
-		},
-		{
-			Name: "Generic Freshman:",
-			Msg:  "I like cheese",
-			TS:   time.Now().Add(-1 * time.Hour),
-		},
-	}
-	if err := json.NewEncoder(w).Encode(data); err != nil {
-		sklog.Errorf("Failed to encode: %s", err)
-	}
-}
-
 type events struct {
 	/*
 			{dow:"S",date:"Dec 24th 2017", hw:"Sleep"},
@@ -173,8 +133,10 @@ type events struct {
 		  	{dow:"S",date:"Jan 6th 2018", hw:"Sleep"},
 		  	{dow:"S",date:"Jan 7th 2018", hw:"Sleep"},
 	*/
-	Date string `json:"date"`
-	Hw   string `json:"hw"`
+	Date   string `json:"date"`
+	Hw     string `json:"hw"`
+	Period int    `json:"period"`
+	Class  string `json:"class"`
 }
 
 func calendarHandler(w http.ResponseWriter, r *http.Request) {
@@ -291,7 +253,6 @@ func main() {
 	// Add page handlers here.
 	router.HandleFunc("/", indexHandler)
 	router.HandleFunc("/classes", classesHandler)
-	router.HandleFunc("/chat", chatHandler)
 	router.HandleFunc("/calendar", calendarHandler)
 	router.HandleFunc("/verify", verifyHandler)
 	router.HandleFunc("/calEdit", calEditHandler)
