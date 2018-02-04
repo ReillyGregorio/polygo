@@ -27,7 +27,7 @@
 			"file": "main.go",
 			"settings":
 			{
-				"buffer_size": 6825,
+				"buffer_size": 6874,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -36,7 +36,7 @@
 			"file": "/home/reilly/.bashrc",
 			"settings":
 			{
-				"buffer_size": 4203,
+				"buffer_size": 4571,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -53,7 +53,7 @@
 			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/templates/index.html",
 			"settings":
 			{
-				"buffer_size": 3712,
+				"buffer_size": 3699,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -138,6 +138,7 @@
 	},
 	"file_history":
 	[
+		"/home/reilly/golib/src/github.com/ReillyGregorio/polygo/index.yaml",
 		"/home/reilly/.config/sublime-text-3/Packages/GoSublime/CHANGELOG.md",
 		"/home/reilly/.config/sublime-text-3/Packages/User/golang.sublime-settings",
 		"/home/reilly/.config/sublime-text-3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
@@ -184,7 +185,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 3,
 			"sheets":
 			[
 				{
@@ -193,28 +194,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 6825,
+						"buffer_size": 6874,
 						"regions":
 						{
-							"mark":
-							{
-								"flags": 1040,
-								"icon": "Packages/Theme - Default/common/dot.png",
-								"regions":
-								[
-									[
-										4243,
-										4243
-									]
-								],
-								"scope": "mark"
-							}
 						},
 						"selection":
 						[
 							[
-								4309,
-								4309
+								4478,
+								4478
 							]
 						],
 						"settings":
@@ -226,7 +214,7 @@
 						"translation.y": 4354.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 1,
 					"type": "text"
 				},
 				{
@@ -235,7 +223,7 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4203,
+						"buffer_size": 4571,
 						"regions":
 						{
 						},
@@ -256,7 +244,7 @@
 						"translation.y": 3264.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 1,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
@@ -295,15 +283,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3712,
+						"buffer_size": 3699,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3305,
-								3305
+								2913,
+								2913
 							]
 						],
 						"settings":
@@ -313,10 +301,10 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 2080.0,
+						"translation.y": 1952.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 0,
 					"type": "text"
 				},
 				{
@@ -473,6 +461,10 @@
 		]
 	},
 	"menu_visible": true,
+	"output.GoSublime-main-output":
+	{
+		"height": 216.0
+	},
 	"output.GoSublime-output":
 	{
 		"height": 1344.0

@@ -160,7 +160,7 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 		start = start.Add(time.Hour * 24)
 
 	}
-	query := ds.NewQuery(CALENDAR).Filter("period=", period).Filter("class=", class).Order("Date")
+	query := ds.NewQuery(CALENDAR).Filter("Period=", period).Filter("Class=", class).Order("Date")
 	data := []events{}
 	it := ds.DS.Run(r.Context(), query)
 	for {
@@ -170,7 +170,7 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 			break
 		}
 		if err != nil {
-			log.Fatalf("Error fetching next task: %v", err)
+			sklog.Errorf("Error fetching next task: %v", err)
 		}
 		lookup[e.Date] = e
 	}
