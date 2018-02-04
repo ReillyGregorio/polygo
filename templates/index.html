@@ -96,11 +96,12 @@
 
     window._selectedPeriod = 1;
     window._selectedClass = "";
+    window._selectedSemester = "2017-2";
 
     document.body.addEventListener("class-change", function(e) {
         window._selectedPeriod = e.detail.period;
         window._selectedClass = e.detail.class;
-        fetch(`/calendar?period=${window._selectedPeriod}&class=${window._selectedClass}`).then(function(response) {
+        fetch(`/calendar?period=${window._selectedPeriod}&class=${window._selectedClass}&semester=${window._selectedSemester}`).then(function(response) {
             if (response.ok) {
                 return response.json();
             }

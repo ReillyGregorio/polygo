@@ -3,4 +3,5 @@ indexes:
   properties:
   - name: Class
   - name: Period
+  - name: Semester
   - name: Date

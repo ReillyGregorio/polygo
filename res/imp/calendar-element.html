@@ -103,6 +103,7 @@ Polymer({
             var jsonString = this.events[this.editIndex];
             jsonString.period = window._selectedPeriod;
             jsonString.class = window._selectedClass;
+            jsonString.semester = window._selectedSemester;
             fetch("/calEdit?token="+document._token, {
                     headers: {
                         'Accept': 'application/json',

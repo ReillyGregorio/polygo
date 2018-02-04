@@ -134,15 +134,18 @@ type events struct {
 		  	{dow:"S",date:"Jan 6th 2018", hw:"Sleep"},
 		  	{dow:"S",date:"Jan 7th 2018", hw:"Sleep"},
 	*/
-	Date   string `json:"date"`
-	Hw     string `json:"hw"`
-	Period int    `json:"period"`
-	Class  string `json:"class"`
+	Date     string `json:"date"`
+	Hw       string `json:"hw"`
+	Period   int    `json:"period"`
+	Class    string `json:"class"`
+	Semester string `json:"semester"`
 }
 
 func calendarHandler(w http.ResponseWriter, r *http.Request) {
 	class := r.FormValue("class")
+	semester := r.FormValue("semester")
 	period, err := strconv.Atoi(r.FormValue("period"))
+
 	if err != nil {
 		sklog.Errorf("error in period conversion : %s", err)
 		http.Error(w, "bad format", 400)
@@ -160,7 +163,7 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 		start = start.Add(time.Hour * 24)
 
 	}
-	query := ds.NewQuery(CALENDAR).Filter("Period=", period).Filter("Class=", class).Order("Date")
+	query := ds.NewQuery(CALENDAR).Filter("Period=", period).Filter("Class=", class).Filter("Semester=", semester).Order("Date")
 	data := []events{}
 	it := ds.DS.Run(r.Context(), query)
 	for {
@@ -236,7 +239,6 @@ func calEditHandler(w http.ResponseWriter, r *http.Request) {
 	}
 	sklog.Infof("%#v", e)
 	key := ds.NewKey(CALENDAR)
-	key.Name = e.Date
 	_, err := ds.DS.Put(context.Background(), key, &e)
 	if err != nil {
 		sklog.Errorf("failed to write %s", err)
