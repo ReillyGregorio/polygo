@@ -12,6 +12,7 @@ import (
 	"strconv"
 	"time"
 
+	"cloud.google.com/go/datastore"
 	firebase "firebase.google.com/go"
 	"github.com/ReillyGregorio/polygo/go/ds"
 	"github.com/gorilla/mux"
@@ -36,6 +37,7 @@ var (
 const (
 	CLASSES  ds.Kind = "classes"
 	CALENDAR ds.Kind = "calendar"
+	SCHEDULE ds.Kind = "schedule"
 )
 
 func makeResourceHandler() func(http.ResponseWriter, *http.Request) {
@@ -69,7 +71,7 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-type period struct {
+type classes struct {
 	/*
 		{period:"1st",class:"Math",classroom:"Room 511"},
 		{period:"2nd",class:"CSP",classroom:"Room 2703"},
@@ -83,34 +85,65 @@ type period struct {
 	Semester  string `json:"semester"   datastore:"semester"`
 }
 
+type schedule struct {
+	Classes []string `json:"classes"      datastore:"classes"`
+}
+
 func classesHandler(w http.ResponseWriter, r *http.Request) {
-	data := []period{
+	uid := r.FormValue("uid")
+	semester := r.FormValue("semester")
+	key := ds.NewKey(SCHEDULE)
+	key.Name = uid + "-" + semester
+	var s schedule
+	if err := ds.DS.Get(r.Context(), key, &s); err != nil {
+		sklog.Errorf("%v", err)
+		http.Error(w, "not found 404", 404)
+		return
+	}
+	dbkeys := []*datastore.Key{}
+	for _, k := range s.Classes {
+		key := ds.NewKey(CLASSES)
+		key.Name = k
+		dbkeys = append(dbkeys, key)
+	}
+	data := make([]*classes, len(dbkeys))
+	if err := ds.DS.GetMulti(r.Context(), dbkeys, data); err != nil {
+		sklog.Errorf("%v", err)
+		http.Error(w, "not found", 404)
+		return
+	}
+	/*data := []classes{
 		{
 			Period:    "1st",
 			Class:     "Math",
 			Classroom: "Room 511",
+			Semester:  "2017-2",
 		},
 		{
 			Period:    "2nd",
 			Class:     "CSP",
 			Classroom: "Room 2703",
+			Semester:  "2017-2",
 		},
 		{
 			Period:    "3rd",
 			Class:     "English",
 			Classroom: "Room 2305",
+			Semester:  "2017-2",
 		},
 		{
 			Period:    "4th",
 			Class:     "Civics",
 			Classroom: "Room 1711",
+			Semester:  "2017-2",
 		},
 		{
 			Period:    "5th",
 			Class:     "Homeroom",
 			Classroom: "Room 503",
+			Semester:  "2017-2",
 		},
-	}
+	}*/
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		sklog.Errorf("Failed to encode: %s", err)
 	}
