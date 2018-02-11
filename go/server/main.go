@@ -9,6 +9,7 @@ import (
 	"log"
 	"net/http"
 	"path/filepath"
+	"sort"
 	"strconv"
 	"time"
 
@@ -84,6 +85,11 @@ type classes struct {
 	Classroom string `json:"classroom"  datastore:"classroom"`
 	Semester  string `json:"semester"   datastore:"semester"`
 }
+type sliceOfClasses []*classes
+
+func (a sliceOfClasses) Len() int           { return len(a) }
+func (a sliceOfClasses) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a sliceOfClasses) Less(i, j int) bool { return a[i].Period < a[j].Period }
 
 type schedule struct {
 	Classes []string `json:"classes"      datastore:"classes"`
@@ -112,6 +118,24 @@ func classesHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "not found", 404)
 		return
 	}
+	allP := []string{"1st", "2nd", "3rd", "4th", "5th"}
+	for _, p := range allP {
+		found := false
+		for _, c := range data {
+			if c.Period == p {
+				found = true
+			}
+		}
+		if !found {
+			data = append(data, &classes{
+				Period:    p,
+				Class:     "",
+				Classroom: "",
+				Semester:  semester,
+			})
+		}
+	}
+	sort.Sort(sliceOfClasses(data))
 	/*data := []classes{
 		{
 			Period:    "1st",
