@@ -89,7 +89,7 @@ Polymer({
         ele.classList.add("selected");
         console.log(+ele.dataset.id[0]);
 
-        var event = new CustomEvent("class-change", {detail: {period: +ele.dataset.id[0], class:ele.dataset.class} ,bubbles: true});
+        var event = new CustomEvent("class-change", {detail: {period: +ele.dataset.id[0], class:ele.dataset.class, rawPeriod: ele.dataset.id} ,bubbles: true});
 
         this.dispatchEvent(event);
     },

@@ -71,6 +71,27 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		sklog.Errorf("Failed to expand template: %s", err)
 	}
 }
+func classListHandler(w http.ResponseWriter, r *http.Request) {
+	period := r.FormValue("period")
+	semester := r.FormValue("semester")
+	query := ds.NewQuery(CLASSES).Filter("period=", period).Filter("semester=", semester)
+	data := []classes{}
+	it := ds.DS.Run(r.Context(), query)
+	for {
+		var c classes
+		_, err := it.Next(&c)
+		if err == iterator.Done {
+			break
+		}
+		if err != nil {
+			sklog.Errorf("Error fetching next task: %v", err)
+		}
+		data = append(data, c)
+	}
+	if err := json.NewEncoder(w).Encode(data); err != nil {
+		sklog.Errorf("Failed to encode: %s", err)
+	}
+}
 
 type classes struct {
 	/*
@@ -322,6 +343,7 @@ func main() {
 	router.HandleFunc("/calendar", calendarHandler)
 	router.HandleFunc("/verify", verifyHandler)
 	router.HandleFunc("/calEdit", calEditHandler)
+	router.HandleFunc("/classList", classListHandler)
 
 	http.Handle("/", router)
 	sklog.Infof("Server is running at: http://localhost%s", *port)
