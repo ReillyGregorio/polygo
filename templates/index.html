@@ -36,8 +36,8 @@
         overflow-y: auto;
         grid-area: calendar;
         height: 93vh;
-        display: none;
     }
+
     class-chooser {
         border-left: solid black 1px;
         margin-left: 20px;
@@ -45,7 +45,7 @@
         overflow-y: auto;
         grid-area: calendar;
         height: 93vh;
-        
+        display: none;
     }
     </style>
 </head>
@@ -55,7 +55,6 @@
     <title-element></title-element>
     <classes-element id="classes"></classes-element>
     <class-chooser id="chooser"></class-chooser>
-
     <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
     <script>
     // Initialize Firebase
@@ -125,6 +124,8 @@
             }).then(function(json) {
                 console.log(json);
                 document.getElementById("chooser").classes = json;
+                document.getElementById("calendar").style.display = "none";
+                document.getElementById("chooser").style.display = "block";
             })
         } else {
 
@@ -135,6 +136,8 @@
                 throw new Error("Network error");
             }).then(function(json) {
                 document.getElementById("calendar").events = json;
+                document.getElementById("calendar").style.display = "block";
+                document.getElementById("chooser").style.display = "none";
             })
         }
     });

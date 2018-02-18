@@ -7,49 +7,15 @@
 -->
 <dom-module id="class-chooser">
     <style>
-    .box {
-        display: grid;
-        grid-template-columns: 100px 1fr;
-        grid-template-areas: "date homework";
-        height: 100px;
-        padding-top: 6px;
-    }
-
-    .box:nth-child(2n) {
-        background: #E0E0E0;
-    }
-
-    .bigone {
-        font-size: 60px;
-        text-align: center;
-    }
-
-    .date {
-        grid-area: date;
-        font-size: 20px;
-        text-align: right;
-    }
-
-    .homework {
-        margin-left: 30px;
-        grid-area: homework;
-        padding-top: 30px;
-        padding-left: 40px;
-        font-size: 30px;
-    }
-
-    .dow {
-        color: #444;
-    }
+      .box {
+          font-size: 35px;
+          display: block;
+      }
     </style>
     <template>
         <template is="dom-repeat" items="{{classes}}">
-            <paper-button>
-                <div class="box" on-click="_click" data-id$="{{item.period}}" data-class$="{{item.class}}">
-                    <div class="period">{{item.period}}</div>
-                    <div class="class">{{item.class}}</div>
-                    <div class="classroom">{{item.classroom}}</div>
-                </div>
+            <paper-button raised class="box">
+                <div>{{item.class}} {{item.period}} {{item.classroom}}</div>
             </paper-button>
         </template>
     </template>
