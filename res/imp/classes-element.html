@@ -14,7 +14,7 @@
         grid-gap: 10px;
         grid-template-columns: 45px 45px 45px;
         grid-template-rows: 45px 45px 45px;
-        grid-template-areas: "period ... ..." "class class class" "... classroom classroom";
+        grid-template-areas: "period ... edit" "class class class" "... classroom classroom";
         width: 162px;
         padding: 2px;
         height: 162px;
@@ -36,6 +36,7 @@
         grid-area: class;
         font-size: 26px;
         text-align: center;
+        margin-top: 8px;
         height: 45px;
     }
 
@@ -49,6 +50,13 @@
     .selected{
         background: #cecece;
     }
+    .edit {
+        grid-area: edit;
+        font-size: 9px;
+        padding: 0px;
+        border-radius: 30px;
+
+    }
     </style>
     <template>
         <template is="dom-repeat" items="{{periods}}">
@@ -56,6 +64,7 @@
                 <div class="period">{{item.period}}</div>
                 <div class="class">{{item.class}}</div>
                 <div class="classroom">{{item.classroom}}</div>
+                <paper-button raised class="edit" on-click="edit">Edit</paper-button>
             </div>
         </template>
         <p>Chat:#chat</p>
@@ -91,6 +100,17 @@ Polymer({
 
         var event = new CustomEvent("class-change", {detail: {period: +ele.dataset.id[0], class:ele.dataset.class, rawPeriod: ele.dataset.id} ,bubbles: true});
 
+        this.dispatchEvent(event);
+    },
+
+
+    edit: function(e) {
+        var ele = e.srcElement;
+        while (!ele.classList.contains("box")){
+            ele = ele.parentElement;
+        }
+        e.stopPropagation();
+        var event = new CustomEvent("class-change", {detail: {class:"", rawPeriod: ele.dataset.id} ,bubbles: true});
         this.dispatchEvent(event);
     },
 
