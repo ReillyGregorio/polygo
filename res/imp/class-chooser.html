@@ -14,7 +14,7 @@
     </style>
     <template>
         <template is="dom-repeat" items="{{classes}}">
-            <paper-button raised class="box">
+            <paper-button raised class="box" on-click="pick" _item="{{item}}">
                 <div>{{item.class}} {{item.period}} {{item.classroom}}</div>
             </paper-button>
         </template>
@@ -34,6 +34,14 @@ Polymer({
 
 
     ready: function() {},
+    pick: function(e) {
+      var ele = e.srcElement;
+        while (!ele.classList.contains("box")){
+            ele = ele.parentElement;
+        }
+      console.log(ele._item);
+      //wite to database. class change
+    },
 
 });
 </script>
