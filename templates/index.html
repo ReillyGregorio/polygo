@@ -36,6 +36,16 @@
         overflow-y: auto;
         grid-area: calendar;
         height: 93vh;
+        display: none;
+    }
+    class-chooser {
+        border-left: solid black 1px;
+        margin-left: 20px;
+        padding-top: 20px;
+        overflow-y: auto;
+        grid-area: calendar;
+        height: 93vh;
+        
     }
     </style>
 </head>
@@ -44,6 +54,8 @@
     <calendar-element id="calendar"></calendar-element>
     <title-element></title-element>
     <classes-element id="classes"></classes-element>
+    <class-chooser id="chooser"></class-chooser>
+
     <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
     <script>
     // Initialize Firebase
@@ -112,7 +124,7 @@
                 throw new Error("Network error");
             }).then(function(json) {
                 console.log(json);
-                //pop up dialog here
+                document.getElementById("chooser").classes = json;
             })
         } else {
 
