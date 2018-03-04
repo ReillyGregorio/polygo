@@ -129,22 +129,23 @@ func classesHandler(w http.ResponseWriter, r *http.Request) {
 	key := ds.NewKey(SCHEDULE)
 	key.Name = uid + "-" + semester
 	var s schedule
+	data := make([]*classes, 0)
 	if err := ds.DS.Get(r.Context(), key, &s); err != nil {
 		sklog.Errorf("%v", err)
-		http.Error(w, "not found 404", 404)
-		return
-	}
-	dbkeys := []*datastore.Key{}
-	for _, k := range s.Classes {
-		key := ds.NewKey(CLASSES)
-		key.Name = k
-		dbkeys = append(dbkeys, key)
-	}
-	data := make([]*classes, len(dbkeys))
-	if err := ds.DS.GetMulti(r.Context(), dbkeys, data); err != nil {
-		sklog.Errorf("%v", err)
-		http.Error(w, "not found", 404)
-		return
+
+	} else {
+		dbkeys := []*datastore.Key{}
+		for _, k := range s.Classes {
+			key := ds.NewKey(CLASSES)
+			key.Name = k
+			dbkeys = append(dbkeys, key)
+		}
+		data = make([]*classes, len(dbkeys))
+		if err := ds.DS.GetMulti(r.Context(), dbkeys, data); err != nil {
+			sklog.Errorf("%v", err)
+			http.Error(w, "not found", 404)
+			return
+		}
 	}
 	allP := []string{"1st", "2nd", "3rd", "4th", "5th"}
 	for _, p := range allP {
@@ -352,8 +353,6 @@ func classListEditHandler(w http.ResponseWriter, r *http.Request) {
 	var s schedule
 	if err := ds.DS.Get(r.Context(), key, &s); err != nil {
 		sklog.Errorf("%v", err)
-		http.Error(w, "not found 404", 404)
-		return
 	}
 	period := e.Classes.Period
 	found := false
