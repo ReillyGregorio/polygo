@@ -7,10 +7,10 @@
 -->
 <dom-module id="class-chooser">
     <style>
-      .box {
-          font-size: 35px;
-          display: block;
-      }
+    .box {
+        font-size: 35px;
+        display: block;
+    }
     </style>
     <template>
         <template is="dom-repeat" items="{{classes}}">
@@ -35,12 +35,27 @@ Polymer({
 
     ready: function() {},
     pick: function(e) {
-      var ele = e.srcElement;
-        while (!ele.classList.contains("box")){
+        var ele = e.srcElement;
+        while (!ele.classList.contains("box")) {
             ele = ele.parentElement;
         }
-      console.log(ele._item);
-      //wite to database. class change
+        console.log(ele._item);
+        //wite to database. class change
+        console.log(document._uid);
+        var jsonString = {
+          "classes":  ele._item, 
+          "id": document._uid,
+        };
+        fetch("/classListEdit?token=" + document._token, {
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                method: "POST",
+                body: JSON.stringify(jsonString)
+            })
+            .then(function(res) { console.log(res) })
+            .catch(function(res) { console.log(res) })
     },
 
 });

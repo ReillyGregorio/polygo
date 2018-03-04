@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"flag"
+	"fmt"
 	"html/template"
 	"io/ioutil"
 	"log"
@@ -11,6 +12,7 @@ import (
 	"path/filepath"
 	"sort"
 	"strconv"
+	"strings"
 	"time"
 
 	"cloud.google.com/go/datastore"
@@ -106,6 +108,11 @@ type classes struct {
 	Classroom string `json:"classroom"  datastore:"classroom"`
 	Semester  string `json:"semester"   datastore:"semester"`
 }
+
+func (c classes) Id() string {
+	return fmt.Sprintf("%s-%s-%s-%s", c.Period, c.Class, c.Classroom, c.Semester)
+}
+
 type sliceOfClasses []*classes
 
 func (a sliceOfClasses) Len() int           { return len(a) }
@@ -323,6 +330,56 @@ func calEditHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+type ClassesEditRequest struct {
+	Classes classes `json:"classes"`
+	Id      string  `json:"id"`
+}
+
+func classListEditHandler(w http.ResponseWriter, r *http.Request) {
+	token := r.FormValue("token")
+	if !isValidUser(token) {
+		http.Error(w, "unauthorized", 402)
+		return
+	}
+	e := ClassesEditRequest{}
+	if err := json.NewDecoder(r.Body).Decode(&e); err != nil {
+		http.Error(w, "bad json", 400)
+		return
+	}
+	sklog.Infof("%#v", e)
+	key := ds.NewKey(SCHEDULE)
+	key.Name = e.Id + "-" + e.Classes.Semester
+	var s schedule
+	if err := ds.DS.Get(r.Context(), key, &s); err != nil {
+		sklog.Errorf("%v", err)
+		http.Error(w, "not found 404", 404)
+		return
+	}
+	period := e.Classes.Period
+	found := false
+	for i, c := range s.Classes {
+		if strings.HasPrefix(c, period) {
+			s.Classes[i] = e.Classes.Id()
+			found = true
+			break
+		}
+	}
+	if !found {
+		s.Classes = append(s.Classes, e.Classes.Id())
+	}
+	sklog.Errorf("%v", s.Classes)
+	if _, err := ds.DS.Put(r.Context(), key, &s); err != nil {
+		sklog.Errorf("%v", err)
+		http.Error(w, "not found 404", 404)
+		return
+	}
+	/*key := ds.NewKey(CALENDAR)
+	_, err := ds.DS.Put(context.Background(), key, &e)
+	if err != nil {
+		sklog.Errorf("failed to write %s", err)
+	}*/
+}
+
 func main() {
 	common.Init()
 	ds.Init("ultra-syntax-689", "production")
@@ -344,6 +401,7 @@ func main() {
 	router.HandleFunc("/verify", verifyHandler)
 	router.HandleFunc("/calEdit", calEditHandler)
 	router.HandleFunc("/classList", classListHandler)
+	router.HandleFunc("/classListEdit", classListEditHandler)
 
 	http.Handle("/", router)
 	sklog.Infof("Server is running at: http://localhost%s", *port)
