@@ -110,6 +110,17 @@
         // ...
     });
 
+    document.body.addEventListener("needs-refresh", function(e) {
+        console.log("**********************");
+        fetch(`/classes?uid=${document._uid}&semester=${window._selectedSemester}`).then(function(response) {
+            if (response.ok) {
+                return response.json();
+            }
+            throw new Error("Network error");
+        }).then(function(json) {
+            document.getElementById("classes").periods = json;
+        })
+    })
 
 
     document.body.addEventListener("class-change", function(e) {
