@@ -89,21 +89,24 @@ Polymer({
     ready: function() {
         this.editIndex = 0;
     },
-
+    // Open class HW editor.
     edit: function(e) {
         this.editIndex = +e.target.dataset.index;
         this.$.edit.value = this.events[this.editIndex].hw;
         this.$.dialog.open();
     },
-
+    // Closing of edit box sending data to server.
     closed: function(e) {
         if (e.detail.confirmed) {
-            //this.events[this.editIndex].hw = this.editText;
+
+            // Store data.
             this.set("events." + this.editIndex + ".hw", this.$.edit.value);
             var jsonString = this.events[this.editIndex];
             jsonString.period = window._selectedPeriod;
             jsonString.class = window._selectedClass;
             jsonString.semester = window._selectedSemester;
+
+            // Fetch the sending of calendar data.
             fetch("/calEdit?token="+document._token, {
                     headers: {
                         'Accept': 'application/json',
@@ -116,7 +119,7 @@ Polymer({
                 .catch(function(res) { console.log(res) })
         }
     },
-
+    // Parsing the days of the week.
     toDay: function(date) {
         var days = ["S", "M", "T", "W", "T", "F", "S"]
         date = date.split("-");

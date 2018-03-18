@@ -25,7 +25,7 @@ import (
 	"google.golang.org/api/option"
 )
 
-// flags
+// Flags.
 var (
 	port         = flag.String("port", ":8000", "HTTP service address (e.g., ':8000')")
 	resourcesDir = flag.String("resources_dir", "", "The directory to find templates, JS, and CSS files. If blank the current directory will be used.")
@@ -37,12 +37,14 @@ var (
 	firebaseApp *firebase.App
 )
 
+// Different kinds of things stored in the datastore.
 const (
 	CLASSES  ds.Kind = "classes"
 	CALENDAR ds.Kind = "calendar"
 	SCHEDULE ds.Kind = "schedule"
 )
 
+// Serves up custom elements.
 func makeResourceHandler() func(http.ResponseWriter, *http.Request) {
 	fileServer := http.FileServer(http.Dir(*resourcesDir))
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -51,6 +53,7 @@ func makeResourceHandler() func(http.ResponseWriter, *http.Request) {
 	}
 }
 
+// Load templates.
 func loadTemplates() {
 	templates = template.Must(template.New("").ParseFiles(
 		filepath.Join(*resourcesDir, "templates/index.html"),
@@ -61,6 +64,7 @@ type IndexData struct {
 	Name string
 }
 
+// Serves up main page.
 func indexHandler(w http.ResponseWriter, r *http.Request) {
 	sklog.Infof("index.html")
 	if *local {
@@ -73,6 +77,8 @@ func indexHandler(w http.ResponseWriter, r *http.Request) {
 		sklog.Errorf("Failed to expand template: %s", err)
 	}
 }
+
+// Querys for all classes with a certain period and semester.
 func classListHandler(w http.ResponseWriter, r *http.Request) {
 	period := r.FormValue("period")
 	semester := r.FormValue("semester")
@@ -95,24 +101,21 @@ func classListHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
+// Classes struct.
+// EXAMPLE {period:"1st",class:"Math",classroom:"Room 511",semster:"2017-2"}.
 type classes struct {
-	/*
-		{period:"1st",class:"Math",classroom:"Room 511"},
-		{period:"2nd",class:"CSP",classroom:"Room 2703"},
-		{period:"3rd",class:"English",classroom:"Room 2305"},
-		{period:"4th",class:"Civics",classroom:"Room 1711"},
-		{period:"5th",class:"Homeroom",classroom:"Room 503"}
-	*/
 	Period    string `json:"period"     datastore:"period"`
 	Class     string `json:"class"      datastore:"class"`
 	Classroom string `json:"classroom"  datastore:"classroom"`
 	Semester  string `json:"semester"   datastore:"semester"`
 }
 
+// Create string for data in schedule.
 func (c classes) Id() string {
 	return fmt.Sprintf("%s-%s-%s-%s", c.Period, c.Class, c.Classroom, c.Semester)
 }
 
+// Sort functions for sorting classes from schedule.
 type sliceOfClasses []*classes
 
 func (a sliceOfClasses) Len() int           { return len(a) }
@@ -123,6 +126,7 @@ type schedule struct {
 	Classes []string `json:"classes"      datastore:"classes"`
 }
 
+// Creates schedule.
 func classesHandler(w http.ResponseWriter, r *http.Request) {
 	uid := r.FormValue("uid")
 	semester := r.FormValue("semester")
@@ -134,6 +138,7 @@ func classesHandler(w http.ResponseWriter, r *http.Request) {
 		sklog.Errorf("%v", err)
 
 	} else {
+		// Gets classes for schedule.
 		dbkeys := []*datastore.Key{}
 		for _, k := range s.Classes {
 			key := ds.NewKey(CLASSES)
@@ -147,6 +152,7 @@ func classesHandler(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 	}
+	// Create empty classes.
 	allP := []string{"1st", "2nd", "3rd", "4th", "5th"}
 	for _, p := range allP {
 		found := false
@@ -165,61 +171,14 @@ func classesHandler(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	sort.Sort(sliceOfClasses(data))
-	/*data := []classes{
-		{
-			Period:    "1st",
-			Class:     "Math",
-			Classroom: "Room 511",
-			Semester:  "2017-2",
-		},
-		{
-			Period:    "2nd",
-			Class:     "CSP",
-			Classroom: "Room 2703",
-			Semester:  "2017-2",
-		},
-		{
-			Period:    "3rd",
-			Class:     "English",
-			Classroom: "Room 2305",
-			Semester:  "2017-2",
-		},
-		{
-			Period:    "4th",
-			Class:     "Civics",
-			Classroom: "Room 1711",
-			Semester:  "2017-2",
-		},
-		{
-			Period:    "5th",
-			Class:     "Homeroom",
-			Classroom: "Room 503",
-			Semester:  "2017-2",
-		},
-	}*/
+
 	if err := json.NewEncoder(w).Encode(data); err != nil {
 		sklog.Errorf("Failed to encode: %s", err)
 	}
 }
 
+// Events/calendar data.
 type events struct {
-	/*
-			{dow:"S",date:"Dec 24th 2017", hw:"Sleep"},
-		  	{dow:"M",date:"Dec 25th 2017", hw:"Chapter 8 page 327-390"},
-		  	{dow:"T",date:"Dec 26th 2017", hw:"Questions 1-17"},
-		  	{dow:"W",date:"Dec 27th 2017", hw:"HW Packet Page 1"},
-		  	{dow:"T",date:"Dec 28th 2017", hw:"HW Packet Page 2"},
-		  	{dow:"F",date:"Dec 29th 2017", hw:"HW Packet Page 3"},
-		  	{dow:"S",date:"Dec 30th 2017", hw:"Sleep"},
-		  	{dow:"S",date:"Dec 31st 2017", hw:"Sleep"},
-		  	{dow:"M",date:"Jan 1st 2018", hw:"HW Packet Page 4"},
-		  	{dow:"T",date:"Jan 2nd 2018", hw:"HW Packet Page 5-6"},
-		  	{dow:"W",date:"Jan 3rd 2018", hw:"Pages 5-17"},
-		  	{dow:"T",date:"Jan 4th 2018", hw:"Pages 18-27"},
-		  	{dow:"F",date:"Jan 5th 2018", hw:"Pages 28-36"},
-		  	{dow:"S",date:"Jan 6th 2018", hw:"Sleep"},
-		  	{dow:"S",date:"Jan 7th 2018", hw:"Sleep"},
-	*/
 	Date     string `json:"date"`
 	Hw       string `json:"hw"`
 	Period   int    `json:"period"`
@@ -227,6 +186,7 @@ type events struct {
 	Semester string `json:"semester"`
 }
 
+// Finds calendar for each class.
 func calendarHandler(w http.ResponseWriter, r *http.Request) {
 	class := r.FormValue("class")
 	semester := r.FormValue("semester")
@@ -237,6 +197,7 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "bad format", 400)
 		return
 	}
+	// Creates calendar days leading upto and after the current day.
 	lookup := map[string]events{}
 	start := time.Now()
 	start = start.Add(-time.Hour * 24 * 5)
@@ -249,6 +210,7 @@ func calendarHandler(w http.ResponseWriter, r *http.Request) {
 		start = start.Add(time.Hour * 24)
 
 	}
+	// Searches for calendars using period, class, semester, and orders them by date.
 	query := ds.NewQuery(CALENDAR).Filter("Period=", period).Filter("Class=", class).Filter("Semester=", semester).Order("Date")
 	data := []events{}
 	it := ds.DS.Run(r.Context(), query)
@@ -276,6 +238,7 @@ type User struct {
 	Name string
 }
 
+// Checks if user is valid using firebase.
 func isValidUser(r string) bool {
 	client, err := firebaseApp.Auth(context.Background())
 	if err != nil {
@@ -291,6 +254,7 @@ func isValidUser(r string) bool {
 	return true
 }
 
+// Validates id token.
 func verifyHandler(w http.ResponseWriter, r *http.Request) {
 	b, err := ioutil.ReadAll(r.Body)
 	if err != nil {
@@ -312,6 +276,7 @@ func verifyHandler(w http.ResponseWriter, r *http.Request) {
 	sklog.Infof("Verified ID token: %v\n", token)
 }
 
+// Edits calendar data.
 func calEditHandler(w http.ResponseWriter, r *http.Request) {
 	token := r.FormValue("token")
 	if !isValidUser(token) {
@@ -336,6 +301,7 @@ type ClassesEditRequest struct {
 	Id      string  `json:"id"`
 }
 
+// Edits class list.
 func classListEditHandler(w http.ResponseWriter, r *http.Request) {
 	token := r.FormValue("token")
 	if !isValidUser(token) {
@@ -348,6 +314,7 @@ func classListEditHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	sklog.Infof("%#v", e)
+	// Seaches schedule for classes with same semester and period.
 	key := ds.NewKey(SCHEDULE)
 	key.Name = e.Id + "-" + e.Classes.Semester
 	var s schedule
@@ -372,13 +339,9 @@ func classListEditHandler(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "not found 404", 404)
 		return
 	}
-	/*key := ds.NewKey(CALENDAR)
-	_, err := ds.DS.Put(context.Background(), key, &e)
-	if err != nil {
-		sklog.Errorf("failed to write %s", err)
-	}*/
 }
 
+// Initializes data.
 func main() {
 	common.Init()
 	ds.Init("ultra-syntax-689", "production")
@@ -393,7 +356,7 @@ func main() {
 	router := mux.NewRouter()
 	router.PathPrefix("/res/").HandlerFunc(makeResourceHandler())
 
-	// Add page handlers here.
+	// page handlers.
 	router.HandleFunc("/", indexHandler)
 	router.HandleFunc("/classes", classesHandler)
 	router.HandleFunc("/calendar", calendarHandler)

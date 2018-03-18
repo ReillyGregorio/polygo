@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"cla",
+				"Classroom\tstring ν"
+			],
+			[
 				"marg",
 				"margin-top"
 			],
@@ -63,25 +67,7 @@
 			"file": "main.go",
 			"settings":
 			{
-				"buffer_size": 9061,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/index.yaml",
-			"settings":
-			{
-				"buffer_size": 107,
-				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/reilly/.bashrc",
-			"settings":
-			{
-				"buffer_size": 4571,
+				"buffer_size": 9463,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -99,7 +85,7 @@
 			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/templates/index.html",
 			"settings":
 			{
-				"buffer_size": 4948,
+				"buffer_size": 5758,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -108,7 +94,7 @@
 			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/calendar-element.html",
 			"settings":
 			{
-				"buffer_size": 3412,
+				"buffer_size": 3544,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -117,7 +103,7 @@
 			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/class-chooser.html",
 			"settings":
 			{
-				"buffer_size": 1010,
+				"buffer_size": 1881,
 				"encoding": "UTF-8",
 				"line_ending": "Unix"
 			}
@@ -126,16 +112,8 @@
 			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/classes-element.html",
 			"settings":
 			{
-				"buffer_size": 2975,
+				"buffer_size": 3068,
 				"encoding": "UTF-8",
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/my-element.html",
-			"settings":
-			{
-				"buffer_size": 380,
 				"line_ending": "Unix"
 			}
 		},
@@ -194,10 +172,11 @@
 	"file_history":
 	[
 		"/home/reilly/.config/sublime-text-3/Packages/GoSublime/CHANGELOG.md",
+		"/home/reilly/.bashrc",
+		"/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/my-element.html",
 		"/home/reilly/golib/src/github.com/ReillyGregorio/polygo/index.yaml",
 		"/home/reilly/.config/sublime-text-3/Packages/User/golang.sublime-settings",
 		"/home/reilly/.config/sublime-text-3/Packages/HTML-CSS-JS Prettify/HTMLPrettify.sublime-settings",
-		"/home/reilly/.bashrc",
 		"/home/reilly/golib/src/github.com/ReillyGregorio/polygo/.git/config",
 		"/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/chat-element.html",
 		"/home/reilly/Downloads/sublime_text_3/sublime_plugin.py",
@@ -208,7 +187,7 @@
 	],
 	"find":
 	{
-		"height": 48.0
+		"height": 77.0
 	},
 	"find_in_files":
 	{
@@ -222,6 +201,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"CLASSES",
+			"classesHandler",
+			"sched",
 			"verifyHandler",
 			"isValidUser",
 			")\n"
@@ -251,15 +233,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 9061,
+						"buffer_size": 9463,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2063,
-								2063
+								446,
+								446
 							]
 						],
 						"settings":
@@ -268,72 +250,14 @@
 							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 2818.0,
+						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 2,
+					"stack_index": 6,
 					"type": "text"
 				},
 				{
 					"buffer": 1,
-					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/index.yaml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 107,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								75,
-								75
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/YAML/YAML.sublime-syntax"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 9,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/reilly/.bashrc",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4571,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4145,
-								4145
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/ShellScript/Shell-Unix-Generic.sublime-syntax",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2360.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/elements.html",
 					"semi_transient": false,
 					"settings":
@@ -359,24 +283,24 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 7,
+					"stack_index": 5,
 					"type": "text"
 				},
 				{
-					"buffer": 4,
+					"buffer": 2,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/templates/index.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4948,
+						"buffer_size": 5758,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								3814,
-								3814
+								5133,
+								5133
 							]
 						],
 						"settings":
@@ -386,27 +310,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 3072.0,
+						"translation.y": 3456.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 4,
 					"type": "text"
 				},
 				{
-					"buffer": 5,
+					"buffer": 3,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/calendar-element.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 3412,
+						"buffer_size": 3544,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								1254,
-								1277
+								3314,
+								3314
 							]
 						],
 						"settings":
@@ -416,27 +340,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1536.0,
+						"translation.y": 2304.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 6,
+					"buffer": 4,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/class-chooser.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1010,
+						"buffer_size": 1881,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								988,
-								988
+								1589,
+								1589
 							]
 						],
 						"settings":
@@ -446,27 +370,27 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 576.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 7,
+					"buffer": 5,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/classes-element.html",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 2975,
+						"buffer_size": 3068,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								2207,
-								2089
+								2894,
+								2894
 							]
 						],
 						"settings":
@@ -476,44 +400,14 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 1920.0,
+						"translation.y": 2016.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/my-element.html",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 380,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/HTML/HTML.sublime-syntax",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 9,
+					"buffer": 6,
 					"file": "/home/reilly/golib/src/github.com/ReillyGregorio/polygo/res/imp/title-element.html",
 					"semi_transient": false,
 					"settings":
@@ -539,7 +433,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 5,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]

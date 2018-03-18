@@ -57,7 +57,8 @@
     <class-chooser id="chooser"></class-chooser>
     <script src="https://www.gstatic.com/firebasejs/4.8.1/firebase.js"></script>
     <script>
-    // Initialize Firebase
+
+    // Initialize Firebase.
     var config = {
         apiKey: "AIzaSyAaF4myVt3fnXKdg5auDidDR5nJmaXB5cY",
         authDomain: "gradproject-7b11f.firebaseapp.com",
@@ -67,10 +68,12 @@
         messagingSenderId: "178157615439"
     };
 
+    // Store class information for sending to server.
     window._selectedPeriod = 1;
     window._selectedClass = "";
     window._selectedSemester = "2017-2";
 
+    // Authenticate user.
     firebase.initializeApp(config);
     var provider = new firebase.auth.GoogleAuthProvider();
     provider.addScope('https://www.googleapis.com/auth/contacts.readonly');
@@ -82,14 +85,16 @@
                 body: idToken
             });
         })
-        // This gives you a Google Access Token. You can use it to access the Google API.
+
+        // This gives you a Google Access Token.
         var token = result.credential.accessToken;
+
         // The signed-in user info.
         var user = result.user;
         document._user = user;
         document._uid = user.uid;
 
-
+        // Fetch classes from different semesters and users.
         fetch(`/classes?uid=${document._uid}&semester=${window._selectedSemester}`).then(function(response) {
             if (response.ok) {
                 return response.json();
@@ -109,9 +114,10 @@
         var credential = error.credential;
         // ...
     });
-
+    // Listen for classes refresh.
     document.body.addEventListener("needs-refresh", function(e) {
         console.log("**********************");
+        // Refresh classes after retreiving new class.
         fetch(`/classes?uid=${document._uid}&semester=${window._selectedSemester}`).then(function(response) {
             if (response.ok) {
                 return response.json();
@@ -122,11 +128,15 @@
         })
     })
 
-
+    // Listen for class change.
     document.body.addEventListener("class-change", function(e) {
+
+        // Store data for fetch.
         window._selectedPeriod = e.detail.period;
         window._selectedClass = e.detail.class;
         if (e.detail.class == "") {
+
+            // Fetch a new class.
             fetch(`/classList?period=${e.detail.rawPeriod}&semester=${window._selectedSemester}`).then(function(response) {
                 if (response.ok) {
                     return response.json();
@@ -140,6 +150,7 @@
             })
         } else {
 
+            // Fetch new calendar for each class.
             fetch(`/calendar?period=${window._selectedPeriod}&class=${window._selectedClass}&semester=${window._selectedSemester}`).then(function(response) {
                 if (response.ok) {
                     return response.json();

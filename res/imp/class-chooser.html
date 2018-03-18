@@ -34,18 +34,23 @@ Polymer({
 
 
     ready: function() {},
+    // Selecting the class from list of classes.
+
     pick: function(e) {
+
+      // Bubble up
         var ele = e.srcElement;
         while (!ele.classList.contains("box")) {
             ele = ele.parentElement;
         }
-        console.log(ele._item);
-        //wite to database. class change
-        console.log(document._uid);
+
+        // Wite to database. class change.
         var jsonString = {
             "classes": ele._item,
             "id": document._uid,
         };
+
+        // Fetch sending the class to the server to change class.
         fetch("/classListEdit?token=" + document._token, {
                 headers: {
                     'Accept': 'application/json',
@@ -56,6 +61,8 @@ Polymer({
             })
             .then(function(res) {
                 if (res.ok) {
+                  
+                  // Refresh class list.
                     var event = new CustomEvent("needs-refresh", { bubbles: true });
                     document.body.dispatchEvent(event);
                 }

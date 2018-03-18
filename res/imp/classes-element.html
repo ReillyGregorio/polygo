@@ -86,7 +86,7 @@ Polymer({
 
 
     },
-
+    // Selecting classes from side list.
     _click: function(e){
         var ele = e.srcElement;
         while (!ele.classList.contains("box")){
@@ -105,11 +105,13 @@ Polymer({
 
 
     edit: function(e) {
+        // Bubble up.
         var ele = e.srcElement;
         while (!ele.classList.contains("box")){
             ele = ele.parentElement;
         }
         e.stopPropagation();
+        // Class change event.
         var event = new CustomEvent("class-change", {detail: {class:"", rawPeriod: ele.dataset.id} ,bubbles: true});
         this.dispatchEvent(event);
     },
